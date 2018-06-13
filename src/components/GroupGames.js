@@ -16,18 +16,12 @@ class GroupGames extends Component {
   render() {
     let awayScorers = [];
     let homeScorers = []
-    if(this.props.data.goals){
-      homeScorers = this.props.data.goals.filter(el => {
-      if(el.team.name === this.props.data.team1.name) {
-        return el;
-      }
-      else {
-        awayScorers.push(el)
-      }
-    }).map((el, i) => {
-      return <div key={'a'+i}><i className="fa fa-soccer-ball-o"></i> '{el.minute} {el.name}</div>
-    })
-    awayScorers = awayScorers.map((el, i) => {
+    console.log(this.props.data)
+    if (this.props.data.goals1 || this.props.data.goals1) {
+        homeScorers = this.props.data.goals1.map((el, i) => {
+          return <div key={'a'+i}><i className="fa fa-soccer-ball-o"></i> '{el.minute} {el.name}</div>
+        });
+    awayScorers = this.props.data.goals2.map((el, i) => {
       return <div key={'b' + i}><i className="fa fa-soccer-ball-o"></i> '{el.minute} {el.name}</div>
     })
   }

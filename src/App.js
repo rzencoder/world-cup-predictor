@@ -106,10 +106,14 @@ class App extends Component {
         </div>
     );
     const stage = this.state.knockout ? knockoutStage : groupStage;
+   
     return (
       <div className="app">
         <h1>World Cup 2018 Russia</h1>
-        <button onClick={this.toggleRound}>Group Stage</button>
+        <div class="round-selector">
+          <div className={this.state.knockout ? '' : "toggle" } onClick={this.toggleRound}>Groups</div>
+          <div className={this.state.knockout ? "toggle" : '' } onClick={this.toggleRound}>Knockouts</div>
+        </div>
         {stage}
       </div>
     );
