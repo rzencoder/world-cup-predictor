@@ -56,6 +56,9 @@ class App extends Component {
 
   render() {
     const games = this.state.games.slice(0, 15);   
+    const knockoutGames = this.state.games.slice(15, 18)
+    knockoutGames.push(this.state.games[19]);
+    console.log(knockoutGames)
     const groups = this.state.groups.map((el, i) => {
       const a = [];
       const groupMatches = games.filter((d,i) => {      
@@ -76,9 +79,16 @@ class App extends Component {
       const letter = el.name[el.name.length - 1].toLowerCase();
       return <a href={"#group-" + letter}>{letter.toUpperCase()}</a>
     })
+    let knockoutList;
+    if(knockoutGames.length){
+    console.log(knockoutGames)
+    knockoutList = knockoutGames.map((el, i) => {
+      return <Knockout key={i} data={el} />
+    })
+  }
     const knockoutStage = (
-      <div>
-        <Knockout />
+      <div class="knockout-container">
+        {knockoutList}
       </div>
     );
     const groupStage = (
