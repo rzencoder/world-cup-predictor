@@ -1,5 +1,155 @@
-body {
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+@import url("https://fonts.googleapis.com/css?family=Archivo+Black|Oxygen");
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-}
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+body {
+  font-family: 'Oxygen', sans-serif;
+  font-size: 16px;
+  color: #333;
+  background: #fffff0; }
+
+.app {
+  max-width: 1250px;
+  margin: 0 auto; }
+
+h1 {
+  font-size: 40px;
+  font-family: 'Archivo Black', sans-serif;
+  padding: 20px;
+  text-align: center; }
+
+.links {
+  background: #ddd;
+  padding: 10px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 900; }
+  .links .link-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; }
+  .links a {
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 24px;
+    font-weight: 900;
+    color: inherit; }
+
+.group-stage {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  text-align: center; }
+
+.group {
+  background: #eee;
+  margin: 20px 10px; }
+  @media (max-width: 500px) {
+    .group {
+      margin: 20px; } }
+
+.group-title {
+  font-size: 22px;
+  font-weight: 700;
+  padding: 10px; }
+
+table {
+  margin: 10px auto;
+  width: 90%; }
+  table thead {
+    color: white; }
+    table thead th {
+      padding: 5px;
+      background: #666 !important; }
+  table tr:nth-child(1n) {
+    background: #ccc; }
+  table tr:nth-child(2n) {
+    background: #ddd; }
+  table .flag-icon {
+    margin: 5px; }
+
+td {
+  vertical-align: middle; }
+
+.group-match-container {
+  text-align: center;
+  padding: 5px;
+  margin: 5px 0; }
+
+.group-match-date {
+  font-size: 17px;
+  font-weight: 700;
+  padding: 5px; }
+
+.group-match-teams {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  font-size: 18px; }
+  .group-match-teams > div {
+    width: 40%; }
+
+.match-time {
+  width: 20%;
+  font-weight: 700;
+  background: lightblue;
+  padding: 5px;
+  margin: 0 5px;
+  height: 15px; }
+
+.team-country {
+  font-size: 20px; }
+
+.scorers {
+  font-size: 12px;
+  padding-left: 5px; }
+
+.match-location {
+  font-size: 14px;
+  padding: 3px; }

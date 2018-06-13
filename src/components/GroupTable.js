@@ -9,7 +9,6 @@ class GroupTable extends Component {
         <tr key={i}>
           <td><FlagIcon code={codeConverter(el.team.code)} size={'2x'} /></td>
           <td>{el.team.name}</td>
-          <td>{el.played}</td>
           <td>{el.won}</td>
           <td>{el.drawn}</td>
           <td>{el.lost}</td>
@@ -20,13 +19,12 @@ class GroupTable extends Component {
     });
     return (
       <div className="App">
-        {this.props.data.name}
+        <h2 className="group-title">{this.props.data.name}</h2>
         <table>
           <thead>
             <tr>
               <th></th>
               <th>Team</th>
-              <th>Played</th>
               <th>W</th>
               <th>D</th>
               <th>L</th>
