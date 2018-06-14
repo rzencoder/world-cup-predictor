@@ -2,7 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-@import url("https://fonts.googleapis.com/css?family=Archivo+Black|Oxygen");
+@import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -57,16 +57,27 @@ body {
   margin: 0 auto; }
 
 h1 {
-  font-size: 40px;
-  font-family: 'Archivo Black', sans-serif;
+  font-size: 50px;
+  font-weight: 700;
   padding: 20px;
-  text-align: center; }
+  text-align: center;
+  font-family: 'Russo One', sans-serif; }
+
+hr {
+  width: 50%;
+  height: 6px;
+  background: red;
+  margin: 0 auto;
+  border: none; }
+
+.blue-stripe {
+  background: blue; }
 
 .links {
   background: #ddd;
   padding: 10px;
-  width: 100%;
-  margin: 0 auto;
+  width: 50%;
+  margin: 15px auto;
   text-align: center;
   font-size: 24px;
   font-weight: 900; }
@@ -159,54 +170,89 @@ td {
   font-size: 14px;
   padding: 3px; }
 
+.knockout-stage {
+  text-align: center; }
+  .knockout-stage h2 {
+    font-size: 22px;
+    font-weight: 700;
+    padding: 10px; }
+
 .knockout-container {
   display: flex;
   flex-direction: row;
   padding: 20px;
   justify-content: space-around; }
+  @media (max-width: 800px) {
+    .knockout-container {
+      flex-direction: column;
+      width: 80%;
+      margin: 0 auto; } }
 
 .knockout-round-container {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   height: 100%; }
+  @media (max-width: 800px) {
+    .knockout-round-container {
+      height: auto; } }
 
 .knockout-match {
   position: relative;
-  background: #ddd;
+  background: #eee;
+  padding: 5px 10px;
+  margin: 10px 5px;
   text-align: center;
-  z-index: 2; }
-  .knockout-match::before {
-    content: '';
-    position: absolute;
-    width: 12px;
-    height: 3px;
-    background: #333;
-    top: 50%;
-    left: -6%;
-    z-index: 2; }
-  .knockout-match::after {
-    content: '';
-    position: absolute;
-    width: 60px;
-    height: 100px;
-    border: 3px solid #333;
-    top: 50%;
-    right: 20%; }
+  z-index: 2;
+  border: 1px solid #ddd;
+  box-shadow: 0px 0px 10px 3px #aaa; }
 
 .knockout-team {
-  display: flex;
-  background: #eee;
+  background: #ddd;
   padding: 4px;
   margin: 5px 0;
-  font-size: 18px; }
+  font-size: 18px;
+  position: relative;
+  cursor: pointer; }
+  .knockout-team:hover .hover-info-container {
+    opacity: 1;
+    display: block; }
+  .knockout-team > div {
+    display: flex; }
+  .knockout-team .knockout-scorers {
+    display: none;
+    font-size: 13px;
+    text-align: left;
+    padding: 3px 7px; }
+    @media (max-width: 800px) {
+      .knockout-team .knockout-scorers {
+        display: block; } }
+
+.knockout-date {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 5px; }
 
 .knockout-country-name {
-  width: 80%; }
+  width: 80%;
+  display: flex;
+  align-items: center;
+  padding-left: 5px; }
+
+.knockout-score {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 5px; }
+
+.knockout-match-location {
+  font-size: 14px;
+  padding: 5px; }
 
 .round-selector {
   width: 60%;
-  margin: 15px auto;
+  margin: 40px auto;
   display: flex;
   color: #333;
   cursor: pointer;
@@ -222,7 +268,7 @@ td {
     padding: 10px; }
 
 .toggle {
-  background: purple;
+  background: #0e4ce0;
   color: white;
   position: relative; }
   .toggle::after {
@@ -234,4 +280,23 @@ td {
     height: 0;
     border-style: solid;
     border-width: 12px 8px 0 8px;
-    border-color: purple transparent transparent transparent; }
+    border-color: #0e4ce0 transparent transparent transparent; }
+
+.hover-info-container {
+  opacity: 0;
+  display: none;
+  background: #ddd;
+  padding: 10px;
+  position: absolute;
+  z-index: 3;
+  bottom: -40px;
+  right: -20%;
+  transition: opacity 0.2s;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 5px 1px #999; }
+  .hover-info-container > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left; }
