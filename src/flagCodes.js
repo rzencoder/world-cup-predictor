@@ -9,12 +9,11 @@ const flagCodes = [{code3: 'AUS', code2: 'au'}, {code3: 'ARG', code2: 'ar'}, {co
 {code3: 'NED', code2: 'nl'}, {code3: 'ITA', code2: 'it'}, {code3: 'ECU', code2: 'ec'}, {code3: 'ALG', code2: 'dz'}, 
 {code3: 'CMR', code2: 'cm'}, {code3: 'GRE', code2: 'gr'}, {code3: 'HON', code2: 'hn'}, {code3: 'BIH', code2: 'ba'},
 {code3: 'CIV', code2: 'ci'}, {code3: 'USA', code2: 'us'}, {code3: 'CHI', code2: 'cl'} , {code3: 'GHA', code2: 'gh'}
-
 ];
 
 const codeConverter = code => {
   const flagCode = flagCodes.filter(el => {
-    if (el.code3 === code) return el;
+    return el.code3 === code;
   });
   return flagCode[0].code2;
 }

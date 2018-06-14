@@ -18,7 +18,7 @@ class GroupTable extends Component {
       )
     });
     return (
-      <div className="App">
+      <div>
         <h2 className="group-title">{this.props.data.name}</h2>
         <table>
           <thead>
