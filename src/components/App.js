@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import placeholderArray from './placeholderData.js';
+import placeholderArray from '../js/placeholderData.js';
 
-import GroupTable from './components/GroupTable.js';
-import GroupGames from './components/GroupGames.js';
-import Knockout from './components/Knockout.js';
-import PlaceholderMatch from './components/PlaceholderMatch.js';
-import KnockoutMatch from './components/KnockoutMatch.js';
+import GroupTable from './GroupTable.js';
+import GroupGames from './GroupGames.js';
+import Knockout from './Knockout.js';
+import PlaceholderMatch from './PlaceholderMatch.js';
+import KnockoutMatch from './KnockoutMatch.js';
 
 const GROUP_API = 'https://raw.githubusercontent.com/openfootball/world-cup.json/master/2018/worldcup.standings.json';
 const GAMES_API = 'https://raw.githubusercontent.com/openfootball/world-cup.json/master/2014/worldcup.json';
@@ -142,6 +142,7 @@ class App extends Component {
     return (
       <div>
         <h1>World Cup 2018 Russia</h1>
+        <hr className="white-stripe"/>
         <hr className="blue-stripe"/>
         <hr/>
         <div className="app">      

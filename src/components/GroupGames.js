@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import dateFormater from '../dateFormater.js';
+import dateFormater from '../js/dateFormater.js';
 
 class GroupGames extends Component {
  
@@ -22,19 +22,25 @@ class GroupGames extends Component {
 
     return (
       <div className="group-match-container">    
-        <div className="group-match-date">{dateFormater(this.props.data.date)}</div>
-        <div className="group-match-teams">
-          <div className="team-name">
-            <div className="country-name">{this.props.data.team1.name}</div>
-            <div className="scorers">{homeScorers}</div>            
-          </div>
-          {displayScoreOrTime}
-          <div className="team-name">
-            <div className="country-name">{this.props.data.team2.name}</div>
-            <div className="scorers">{awayScorers}</div>            
+        <div>
+          <div className="group-match-date">{dateFormater(this.props.data.date)}</div>
+          <div className="group-match-teams">
+            <div className="team-name">
+              <div className="country-name">{this.props.data.team1.name}</div>
+              <div className="scorers">{homeScorers}</div>            
+            </div>
+            {displayScoreOrTime}
+            <div className="team-name">
+              <div className="country-name">{this.props.data.team2.name}</div>
+              <div className="scorers">{awayScorers}</div>        
+            </div>
           </div>
         </div>
-        <div className="match-location">{this.props.data.city}</div>
+        <div>
+          <div className="match-stadium">{this.props.data.stadium ? this.props.data.stadium.name : '' }</div>
+          <div className="match-location">{this.props.data.city}</div>
+          <hr className="group-line"/>  
+        </div>
       </div>
     );
   }

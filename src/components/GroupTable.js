@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FlagIcon from './FlagIcon.js';
-import codeConverter from '../flagCodes.js';
+import codeConverter from '../js/flagCodes.js';
 
 class GroupTable extends Component {
   render() {
