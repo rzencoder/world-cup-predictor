@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
 import dateFormater from '../js/dateFormater.js';
+import timeConverter from '../js/timeConverter.js';
 
 class GroupGames extends Component {
- 
+  
   render() {
     let homeScorers = [];
-    let awayScorers = [];  
-
+    let awayScorers = [];
     if (this.props.data.goals1 || this.props.data.goals2) {
       homeScorers = this.props.data.goals1.map((el, i) => {
-        return <div key={'a'+i}><i className="fa fa-soccer-ball-o"></i> '{el.minute} {el.name}</div>
+        return <div key={'a'+i}><i className="fas fa-futbol"></i> '{el.minute} {el.name}</div>
       });
       awayScorers = this.props.data.goals2.map((el, i) => {
-        return <div key={'b' + i}><i className="fa fa-soccer-ball-o"></i> '{el.minute} {el.name}</div>
+        return <div key={'b' + i}><i className="fas fa-futbol"></i> '{el.minute} {el.name}</div>
       });
     }   
 
     const score = <span className="group-time">{this.props.data.score1} : {this.props.data.score2}</span>;
-    const time = <span className="group-time">{this.props.data.time}</span>;
+    const time = <span className="group-time">{timeConverter(this.props.data.time, this.props.data.timezone)}</span>;
     const displayScoreOrTime = this.props.data.score1 === null ? time : score;
 
     return (

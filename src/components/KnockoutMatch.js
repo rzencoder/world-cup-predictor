@@ -13,10 +13,10 @@ class KnockoutMatch extends Component {
       let homeScorers = [];     
       if (this.props.data.goals1) {
         homeScorers = this.props.data.goals1.map((el, i) => {
-          return <div key={i}><i className="fa fa-soccer-ball-o"></i> '{el.minute} {el.name}</div>
+          return <div key={i}><i className="fas fa-futbol"></i> '{el.minute} {el.name}</div>
         });
         awayScorers = this.props.data.goals2.map((el, i) => {
-          return <div key={i}><i className="fa fa-soccer-ball-o"></i> '{el.minute} {el.name}</div>
+          return <div key={i}><i className="fas fa-futbol"></i> '{el.minute} {el.name}</div>
         });
       }
 

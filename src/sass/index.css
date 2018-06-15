@@ -58,9 +58,19 @@ table {
   margin-top: 10px;
   text-align: center; }
 
+.title-flag-container {
+  display: flex;
+  justify-content: center; }
+
+.title-flag {
+  display: flex;
+  align-items: center; }
+  .title-flag > div {
+    box-shadow: 2px 2px 6px 0 #999; }
+
 .stripe {
-  width: 50%;
-  height: 6px;
+  width: 100px;
+  height: 20px;
   background: #e90101;
   margin: 0 auto;
   border: none; }
@@ -126,6 +136,29 @@ table {
     font-size: 24px;
     font-weight: 900;
     color: inherit; }
+
+.info-panel {
+  width: 50%;
+  position: relative;
+  background: #b7d5df;
+  margin: 15px auto 5px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 3px;
+  font-size: 17px; }
+  @media (max-width: 700px) {
+    .info-panel {
+      width: 80%; } }
+  .info-panel i {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    cursor: pointer; }
+    .info-panel i:hover {
+      color: #555; }
+  .info-panel p {
+    padding: 5px; }
 
 .group-stage {
   display: grid;

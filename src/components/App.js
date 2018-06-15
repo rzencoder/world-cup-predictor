@@ -27,10 +27,12 @@ class App extends Component {
       games: [],
       knockout: false,
       loadedGames: false,
-      loadedGroups: false
+      loadedGroups: false,
+      showInfo: true
     }
     this.getGroups = this.getGroups.bind(this);
-    this.toggleRound = this.toggleRound.bind(this)
+    this.toggleRound = this.toggleRound.bind(this);
+    this.closeInfo = this.closeInfo.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +65,12 @@ class App extends Component {
   toggleRound () {
     this.setState({
       knockout: !this.state.knockout
+    });
+  }
+
+  closeInfo = () => {
+    this.setState({
+      showInfo: false
     });
   }
 
@@ -120,7 +128,7 @@ class App extends Component {
           {knockoutRounds}
         </div>
       );
-      
+
       const groupStage = (
         <div className="group-container">           
           <div className="links">
@@ -140,13 +148,29 @@ class App extends Component {
 
    const show  = stage ? stage : '';
 
+   const infoPanel = (
+     <div className="info-panel">
+        <i onClick={this.closeInfo} className="fas fa-times"></i>
+        <p>API updated daily <a href="https://github.com/openfootball/world-cup.json">https://github.com/openfootball/world-cup.json</a></p>
+        <p>All Kickoff Times (UTC +00:00)</p>
+      </div>
+   );
+
     return (
       <div className="app">
-        <h1 className="title">World Cup 2018 Russia</h1>
-        <hr className="stripe white-stripe"/>
-        <hr className="stripe blue-stripe"/>
-        <hr className="stripe"/>
-        <div className="app-container">      
+      <h1 className="title">World Cup 2018 Russia</h1>
+        <div className="title-flag-container">    
+          <div className="title-flag">
+            <div>
+              <hr className="stripe white-stripe"/>
+              <hr className="stripe blue-stripe"/>
+              <hr className="stripe"/>
+            </div>
+          </div>
+        </div>
+        {this.state.showInfo && infoPanel}
+    
+        <div className="container">      
           <div className="round-selector">
             <div className={this.state.knockout ? '' : "toggle" } onClick={this.toggleRound}>Groups</div>
             <div className={this.state.knockout ? "toggle" : '' } onClick={this.toggleRound}>Knockouts</div>
