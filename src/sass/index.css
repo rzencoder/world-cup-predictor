@@ -3,6 +3,10 @@
    License: none (public domain)
 */
 @import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
+@import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
+@import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
+@import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
+@import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -46,24 +50,15 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-body {
-  font-family: 'Oxygen', sans-serif;
-  font-size: 16px;
-  color: #333;
-  background: #fffef1; }
-
-.app {
-  max-width: 1250px;
-  margin: 0 auto; }
-
-h1 {
+.title {
+  font-family: "Russo One", sans-serif;
   font-size: 50px;
   font-weight: 700;
   padding: 20px;
-  text-align: center;
-  font-family: 'Russo One', sans-serif; }
+  margin-top: 10px;
+  text-align: center; }
 
-hr {
+.stripe {
   width: 50%;
   height: 6px;
   background: #e90101;
@@ -76,20 +71,55 @@ hr {
 .white-stripe {
   background: white; }
 
+.round-selector {
+  width: 60%;
+  margin: 40px auto;
+  display: flex;
+  cursor: pointer;
+  background: #ddd; }
+  @media (max-width: 500px) {
+    .round-selector {
+      width: 90%; } }
+  .round-selector > div {
+    width: 50%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px; }
+
+.toggle {
+  background: #0e4ce0;
+  color: white;
+  position: relative; }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    bottom: -28%;
+    left: 48%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 12px 8px 0 8px;
+    border-color: #0e4ce0 transparent transparent transparent; }
+
 .links {
   background: #ddd;
+  font-family: "Russo One", sans-serif;
   padding: 10px;
   width: 50%;
   margin: 15px auto;
   text-align: center;
   font-size: 24px;
-  font-weight: 900; }
+  font-weight: 700; }
   .links .link-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     width: 60%;
     margin: 0 auto; }
+    @media (max-width: 800px) {
+      .links .link-container {
+        width: 90%; } }
   .links a {
     text-decoration: none;
     padding: 10px 15px;
@@ -115,23 +145,22 @@ hr {
   font-weight: 700;
   padding: 10px; }
 
-table {
+.group-table {
   margin: 10px auto;
   width: 90%; }
-  table thead {
+  .group-table thead {
     color: white; }
-    table thead th {
+    .group-table thead th {
       padding: 5px;
       background: #666 !important; }
-  table tr:nth-child(1n) {
+  .group-table tr:nth-child(1n) {
     background: #ccc; }
-  table tr:nth-child(2n) {
+  .group-table tr:nth-child(2n) {
     background: #ddd; }
-  table .flag-icon {
+  .group-table .flag-icon {
     margin: 5px; }
-
-td {
-  vertical-align: middle; }
+  .group-table td {
+    vertical-align: middle; }
 
 .group-match-container {
   text-align: center;
@@ -141,42 +170,45 @@ td {
   display: flex;
   flex-direction: column;
   justify-content: space-between; }
+  @media (max-width: 550px) {
+    .group-match-container {
+      min-height: 180px; } }
 
-.group-match-date {
+.group-date {
   font-size: 17px;
   font-weight: 700;
-  padding: 5px; }
+  padding: 5px 0 10px; }
 
-.group-match-teams {
+.group-teams {
   display: flex;
   justify-content: center;
   position: relative;
   font-size: 18px; }
-  .group-match-teams > div {
+  .group-teams > div {
     width: 40%; }
 
-.match-time {
+.group-time {
   width: 20%;
   font-weight: 700;
-  background: lightblue;
+  background: #b4deec;
   padding: 5px;
   margin: 0 5px;
   height: 17px; }
 
-.country-name {
+.group-country-name {
   font-size: 20px; }
 
-.scorers {
+.group-scorers {
   font-size: 11px;
   padding: 5px; }
-  .scorers > div {
+  .group-scorers > div {
     padding: 2px 0; }
 
-.match-stadium {
+.group-stadium {
   font-size: 16px;
   padding: 3px; }
 
-.match-location {
+.group-location {
   font-size: 14px;
   padding: 3px; }
 
@@ -187,11 +219,27 @@ td {
   height: 1px; }
 
 .knockout-stage {
-  text-align: center; }
+  text-align: center;
+  width: 25%;
+  background: #e6ecef;
+  padding-bottom: 40px; }
+  @media (max-width: 800px) {
+    .knockout-stage {
+      width: 100%;
+      background: initial; } }
+  .knockout-stage:nth-of-type(2n) {
+    background: #d7e9ef; }
+    @media (max-width: 800px) {
+      .knockout-stage:nth-of-type(2n) {
+        background: initial; } }
   .knockout-stage h2 {
-    font-size: 22px;
+    font-size: 26px;
+    font-family: "Russo One", sans-serif;
     font-weight: 700;
     padding: 10px; }
+    @media (max-width: 800px) {
+      .knockout-stage h2 {
+        font-size: 32px; } }
 
 .knockout-container {
   display: flex;
@@ -208,10 +256,14 @@ td {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 100%; }
+  height: 100%;
+  width: 90%;
+  margin: 0 auto; }
   @media (max-width: 800px) {
     .knockout-round-container {
-      height: auto; } }
+      height: auto;
+      width: auto;
+      margin: initial; } }
 
 .knockout-match {
   position: relative;
@@ -252,9 +304,12 @@ td {
         display: block; } }
 
 .knockout-date {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   padding: 5px; }
+  @media (max-width: 800px) {
+    .knockout-date {
+      font-size: 17px; } }
 
 .knockout-country-name {
   width: 60%;
@@ -269,41 +324,19 @@ td {
   justify-content: flex-end;
   padding-right: 5px; }
 
-.knockout-match-location {
-  font-size: 14px;
-  padding: 5px; }
+.knockout-stadium {
+  font-size: 15px;
+  padding: 3px; }
 
-.round-selector {
-  width: 60%;
-  margin: 40px auto;
-  display: flex;
-  color: #333;
-  cursor: pointer;
-  background: #ddd; }
-  @media (max-width: 500px) {
-    .round-selector {
-      width: 90%; } }
-  .round-selector > div {
-    width: 50%;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 700;
-    padding: 10px; }
+.knockout-location {
+  font-size: 13px;
+  padding: 3px; }
 
-.toggle {
-  background: #0e4ce0;
-  color: white;
-  position: relative; }
-  .toggle::after {
-    content: '';
-    position: absolute;
-    bottom: -28%;
-    left: 48%;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 12px 8px 0 8px;
-    border-color: #0e4ce0 transparent transparent transparent; }
+.placeholder-name {
+  font-weight: 700;
+  text-align: center;
+  width: initial;
+  margin: 0 auto; }
 
 .hover-info-container {
   opacity: 0;
@@ -311,7 +344,7 @@ td {
   background: #ddd;
   padding: 10px;
   position: absolute;
-  z-index: 3;
+  z-index: 20;
   bottom: -40px;
   right: -20%;
   transition: opacity 0.2s;
@@ -324,8 +357,70 @@ td {
     justify-content: flex-start;
     text-align: left; }
 
-.placeholder-name {
-  font-weight: 700;
-  text-align: center;
-  width: initial;
+.bracket-team::before {
+  content: '';
+  position: absolute;
+  height: 1px;
+  width: 13%;
+  left: -13%;
+  top: 50%;
+  border-top: 3px solid #444; }
+  @media (max-width: 800px) {
+    .bracket-team::before {
+      display: none; } }
+
+.bracket-team::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 10px;
+  right: -10px;
+  border-color: #444;
+  border-width: 3px; }
+  @media (max-width: 800px) {
+    .bracket-team::after {
+      display: none; } }
+
+.bracket-team:nth-of-type(odd):after {
+  height: 100%;
+  top: 50%;
+  border-right-style: solid;
+  border-top-style: solid; }
+
+.bracket-team:nth-of-type(even):after {
+  height: 100%;
+  top: -50%;
+  border-right-style: solid;
+  border-bottom-style: solid; }
+
+.bracket-1 .bracket-team:before {
+  display: none; }
+
+.bracket-2 .bracket-team:nth-of-type(odd):after {
+  height: 200%;
+  top: 50%; }
+
+.bracket-2 .bracket-team:nth-of-type(even):after {
+  height: 200%;
+  top: -150%; }
+
+.bracket-3 .bracket-team:nth-of-type(odd):after {
+  height: 350%;
+  top: 50%; }
+
+.bracket-3 .bracket-team:nth-of-type(even):after {
+  height: 350%;
+  top: -300%; }
+
+.bracket-4 .bracket-team:after {
+  display: none; }
+
+body {
+  font-family: "Oxygen", arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+  background: #fffef1; }
+
+.container {
+  max-width: 1250px;
   margin: 0 auto; }

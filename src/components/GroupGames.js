@@ -16,29 +16,29 @@ class GroupGames extends Component {
       });
     }   
 
-    const score = <span className="match-time">{this.props.data.score1} : {this.props.data.score2}</span>;
-    const time = <span className="match-time">{this.props.data.time}</span>;
+    const score = <span className="group-time">{this.props.data.score1} : {this.props.data.score2}</span>;
+    const time = <span className="group-time">{this.props.data.time}</span>;
     const displayScoreOrTime = this.props.data.score1 === null ? time : score;
 
     return (
       <div className="group-match-container">    
         <div>
-          <div className="group-match-date">{dateFormater(this.props.data.date)}</div>
-          <div className="group-match-teams">
-            <div className="team-name">
-              <div className="country-name">{this.props.data.team1.name}</div>
-              <div className="scorers">{homeScorers}</div>            
+          <div className="group-date">{dateFormater(this.props.data.date)}</div>
+          <div className="group-teams">
+            <div className="group-team">
+              <div className="group-country-name">{this.props.data.team1.name}</div>
+              <div className="group-scorers">{homeScorers}</div>            
             </div>
             {displayScoreOrTime}
-            <div className="team-name">
-              <div className="country-name">{this.props.data.team2.name}</div>
-              <div className="scorers">{awayScorers}</div>        
+            <div className="group-team">
+              <div className="group-country-name">{this.props.data.team2.name}</div>
+              <div className="group-scorers">{awayScorers}</div>        
             </div>
           </div>
         </div>
         <div>
-          <div className="match-stadium">{this.props.data.stadium ? this.props.data.stadium.name : '' }</div>
-          <div className="match-location">{this.props.data.city}</div>
+          <div className="group-stadium">{this.props.data.stadium ? this.props.data.stadium.name : '' }</div>
+          <div className="group-location">{this.props.data.city}</div>
           <hr className="group-line"/>  
         </div>
       </div>

@@ -20,7 +20,7 @@ class GroupTable extends Component {
     return (
       <div>
         <h2 className="group-title">{this.props.data.name}</h2>
-        <table>
+        <table className="group-table">
           <thead>
             <tr>
               <th></th>

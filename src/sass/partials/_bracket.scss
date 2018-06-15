@@ -1,0 +1,76 @@
+@import 'variables';
+
+.bracket-team {
+    &::before {
+        content: '';
+        position: absolute;
+        height: 1px;
+        width: 13%;
+        left: -13%;
+        top: 50%;
+        border-top: 3px solid $bracket-color;
+        @media(max-width: 800px) {
+            display: none;
+        }
+    }   
+    &::after {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 10px;
+        right: -10px;
+        border-color: $bracket-color;
+        border-width: 3px;    
+        @media(max-width: 800px) {
+            display: none;
+        }
+    }
+}
+
+.bracket-team:nth-of-type(odd):after {
+    height: 100%;
+    top: 50%;
+    border-right-style: solid;
+    border-top-style: solid;
+}
+
+.bracket-team:nth-of-type(even):after {
+    height: 100%;
+    top: -50%;
+    border-right-style: solid;
+    border-bottom-style: solid;
+}
+
+.bracket-1 {
+    .bracket-team:before {
+        display: none;
+    }
+}
+
+.bracket-2 {
+    .bracket-team:nth-of-type(odd):after {
+        height: 200%;
+        top: 50%;
+    }
+    .bracket-team:nth-of-type(even):after {
+        height: 200%;
+        top: -150%;
+    }
+}
+
+.bracket-3 {
+    .bracket-team:nth-of-type(odd):after {
+        height: 350%;
+        top: 50%;
+    }
+    .bracket-team:nth-of-type(even):after {
+        height: 350%;
+        top: -300%;
+    }
+}
+
+.bracket-4 {
+    .bracket-team:after {
+        display: none;
+    }
+}

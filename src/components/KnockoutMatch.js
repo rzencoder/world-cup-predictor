@@ -35,7 +35,7 @@ class KnockoutMatch extends Component {
       };
 
       return (
-      <div className="knockout-match"> 
+      < div className = "knockout-match bracket-team" >
         <div className="knockout-date">{dateFormater(this.props.data.date)}</div>
         <div className="knockout-teams">
           <div className="knockout-team">
@@ -68,8 +68,8 @@ class KnockoutMatch extends Component {
             </div>        
           </div>
         </div>
-        <div className="knockout-match-stadium">{this.props.data.stadium ? this.props.data.stadium.name : '' }</div>
-        <div className="knockout-match-location">{this.props.data.city}</div>
+        <div className="knockout-stadium">{this.props.data.stadium ? this.props.data.stadium.name : '' }</div>
+        <div className="knockout-location">{this.props.data.city}</div>
       </div>
     );
   }

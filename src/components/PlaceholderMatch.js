@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class PlaceholderMatch extends Component {
     render() {
       return (
-      <div className="knockout-match"> 
+      < div className = "knockout-match bracket-team" >
        <div className="knockout-date">{this.props.data.date}</div>
         <div className="knockout-teams">
           <div className="knockout-team">
@@ -20,8 +20,8 @@ class PlaceholderMatch extends Component {
              </div> 
           </div>
         </div>
-        <div className="knockout-match-stadium">{this.props.data.stadium}</div>
-        <div className="knockout-match-location">{this.props.data.location}</div>
+        <div className="knockout-stadium">{this.props.data.stadium}</div>
+        <div className="knockout-location">{this.props.data.location}</div>
       </div>
     );
   }

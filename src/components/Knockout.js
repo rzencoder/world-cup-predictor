@@ -14,7 +14,7 @@ class Knockout extends Component {
         return (          
             <div className="knockout-stage">
                 <h2>{roundConverter(this.props.data.length)}</h2> 
-                <div className="knockout-round-container">    
+                <div className={"knockout-round-container bracket-" + (this.props.round + 1)}>    
                     {this.props.data}
                 </div>
             </div>

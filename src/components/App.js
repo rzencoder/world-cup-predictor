@@ -9,7 +9,7 @@ import PlaceholderMatch from './PlaceholderMatch.js';
 import KnockoutMatch from './KnockoutMatch.js';
 
 const GROUP_API = 'https://raw.githubusercontent.com/openfootball/world-cup.json/master/2018/worldcup.standings.json';
-const GAMES_API = 'https://raw.githubusercontent.com/openfootball/world-cup.json/master/2014/worldcup.json';
+const GAMES_API = 'https://raw.githubusercontent.com/openfootball/world-cup.json/master/2018/worldcup.json';
 
 const placeholderGames = placeholderArray.map(round => {
   return { matches:
@@ -120,8 +120,9 @@ class App extends Component {
           {knockoutRounds}
         </div>
       );
+      
       const groupStage = (
-        <div>           
+        <div className="group-container">           
           <div className="links">
             <div>Go to Group:</div>
             <div className="link-container">
@@ -140,12 +141,12 @@ class App extends Component {
    const show  = stage ? stage : '';
 
     return (
-      <div>
-        <h1>World Cup 2018 Russia</h1>
-        <hr className="white-stripe"/>
-        <hr className="blue-stripe"/>
-        <hr/>
-        <div className="app">      
+      <div className="app">
+        <h1 className="title">World Cup 2018 Russia</h1>
+        <hr className="stripe white-stripe"/>
+        <hr className="stripe blue-stripe"/>
+        <hr className="stripe"/>
+        <div className="app-container">      
           <div className="round-selector">
             <div className={this.state.knockout ? '' : "toggle" } onClick={this.toggleRound}>Groups</div>
             <div className={this.state.knockout ? "toggle" : '' } onClick={this.toggleRound}>Knockouts</div>
