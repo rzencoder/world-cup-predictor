@@ -5,17 +5,17 @@ export const tempMatches = [{ "name": "Round of 16",
           "date": "2018-06-30",
           "time": "15:00",
           "team1": {
-            "name": "Spain",
+            "name": null,
             "code": null,
             "position": "C1"
           },
           "team2": {
-            "name": "England",
+            "name": null,
             "code": null,
             "position": "D2"
           },
-          "score1": 2,
-          "score2": 1,
+          "score1": null,
+          "score2": null,
           "score1i": null,
           "score2i": null,
           "score1et": null,

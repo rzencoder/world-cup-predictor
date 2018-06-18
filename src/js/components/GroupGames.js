@@ -26,7 +26,7 @@ class GroupGames extends Component {
       awayScore: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.changeScoreClick = this.changeScoreClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.updateTable = this.updateTable.bind(this);
     this.score1Input = React.createRef();
     this.score2Input = React.createRef();
@@ -35,16 +35,23 @@ class GroupGames extends Component {
   handleInputChange (e) {
     const name = e.target.name;
     const home = name === 'homeScore' ? 1 : 2;  
+    this.changeScore(name, e.target.value, home);
+  }
+
+  changeScore (name, value, home) {
+    // const opponentName = name === "homeScore" ? "awayScore" : "homeScore";
+    // const opponentScore = opponentName === "homeScore" ? this.state.awayScore : this.state.homeScore;
+    // const opponentValue = opponentScore === "" ? 0 : opponentScore;
     this.setState({
-      [name]: e.target.value
-    }, () => this.updateTable(e.target.value, home));
+      [name]: value
+    }, () => this.updateTable(value, home));
   }
 
   updateTable (value, home) {
     this.props.updateScore(this.props.group, this.props.index, value, home);
   }
 
-  changeScoreClick (e) {
+  handleClick (e) {
     // Check if user increased or decreased score
     const incOrDec = e.target.className;
     // Check using refs is the home or away team was clicked
@@ -57,9 +64,7 @@ class GroupGames extends Component {
     value = value < 0 ? 0 : value;
     const name = id + 'Score';
     const home = id === 'home' ? 1 : 2;
-    this.setState({
-      [name]: value
-    }, () => this.updateTable(value, home));
+    this.changeScore(name, value, home);
   }
   
   render() {
@@ -83,7 +88,7 @@ class GroupGames extends Component {
     const prediction = (
       <div className="prediction-container">
         <div id="home">
-          <div onClick={this.changeScoreClick} className="up"></div>
+          <div onClick={this.handleClick} className="up"></div>
           <div>
             <input name="homeScore"
                 type="number"
@@ -92,10 +97,10 @@ class GroupGames extends Component {
                 onChange={this.handleInputChange} 
                 min="0"/>
           </div>
-          <div onClick={(e) => {this.changeScoreClick(e)}} className="down"></div>
+          <div onClick={this.handleClick} className="down"></div>
         </div>
         <div id="away">
-          <div onClick={this.changeScoreClick} className="up"></div>
+          <div onClick={this.handleClick} className="up"></div>
           <div>
             <input name="awayScore"
                 type="number"
@@ -104,7 +109,7 @@ class GroupGames extends Component {
                 onChange={this.handleInputChange} 
                 min="0"/>
           </div>
-          <div onClick={this.changeScoreClick} className="down"></div>
+          <div onClick={this.handleClick} className="down"></div>
         </div>
       </div>
     )

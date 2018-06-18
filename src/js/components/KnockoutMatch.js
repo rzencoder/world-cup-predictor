@@ -6,7 +6,7 @@ import FlagIcon from './FlagIcon.js';
 import codeConverter from '../data/flagCodes.js';
 import HoverInfo from './HoverInfo.js';
 import dateFormater from '../helpers/dateFormater.js';
-import { updateKnockout } from '../actions/index';
+import { updateKnockout, removeTeam } from '../actions/index';
 
 const mapStateToProps = state => {
   return {
@@ -16,7 +16,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateKnockout: (teams, index1, round, home) => dispatch(updateKnockout(teams, index1, round, home))
+    updateKnockout: (teams, index1, round, home) => dispatch(updateKnockout(teams, index1, round, home)),
+    removeTeam: (round, match, home) => dispatch(removeTeam(round, match, home))
   };
 };
 
@@ -56,6 +57,7 @@ class KnockoutMatch extends Component {
        // If result >= 0 home team won
       const result = homeScore - awayScore;
       const team = result >= 0 ? this.props.data.team1 : this.props.data.team2;
+      const losingTeam = result >= 0 ? this.props.data.team2 : this.props.data.team1;
       const teams = [{name: team.name, code: team.code}];
 
       let firstIndex;
@@ -66,14 +68,10 @@ class KnockoutMatch extends Component {
       });
 
       const home = 'team' + this.props.home;
-
+      this.checkFutureRounds(losingTeam);
       this.props.updateKnockout(teams, firstIndex, this.props.round, home);
-      // this.checkFutureRounds(teams)
+      
     }
-  }
-
-  checkFutureRounds () {
-
   }
 
   changeScoreClick (e) {
@@ -104,6 +102,31 @@ class KnockoutMatch extends Component {
       }
     }
     return data['score' + i];
+  }
+
+  checkFutureRounds (losingTeam) {
+
+    const knockouts = [...this.props.knockouts];
+    const removeTeamArr = [];
+
+    knockouts.forEach((round, i) => {
+      if(i > this.props.round) {
+        round.matches.forEach((match, j) => {
+          if (losingTeam.name === match.team1.name) {
+            removeTeamArr.push({ round: i, match: j, home: 'team1' });
+          }
+          if (losingTeam.name === match.team2.name) {
+            removeTeamArr.push({ round: i, match: j, home: 'team2' });
+          }
+        });
+      }
+    });
+
+    if (removeTeamArr.length) {
+      removeTeamArr.forEach(el => {
+        this.props.removeTeam(el.round, el.match, el.home);
+      });
+    }
   }
 
   render() {
@@ -204,7 +227,8 @@ KnockoutMatch.propTypes = {
   data: PropTypes.object.isRequired,
   first: PropTypes.number.isRequired,
   round: PropTypes.number.isRequired,
-  home: PropTypes.number.isRequired
+  home: PropTypes.number.isRequired,
+  removeTeam: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(KnockoutMatch);

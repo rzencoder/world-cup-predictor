@@ -1,5 +1,5 @@
 import update from 'immutability-helper';
-import { KNOCKOUT_DATA_FETCHED, UPDATE_QUALIFIER, UPDATE_KNOCKOUT } from '../constants/action-types';
+import { KNOCKOUT_DATA_FETCHED, UPDATE_QUALIFIER, UPDATE_KNOCKOUT, REMOVE_TEAM } from '../constants/action-types';
 
 export function knockouts (state = [], action) {
   switch (action.type) {
@@ -38,6 +38,21 @@ export function knockouts (state = [], action) {
                     }
                 }
             }
+        })
+    
+    case REMOVE_TEAM:
+    console.log('delete')
+        return update(state, {
+          [action.round]: {
+            matches: {
+              [action.match]: {
+                [action.home]: {
+                  name: { $set: null },
+                  code: { $set: null }
+                }
+              }
+            }
+          }
         })
 
     default:

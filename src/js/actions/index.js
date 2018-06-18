@@ -1,6 +1,6 @@
 import { tempMatches } from '../data/matchData';
 import { KNOCKOUT_DATA_FETCHED, UPDATE_QUALIFIER, UPDATE_KNOCKOUT,
-    UPDATE_SCORE, DATA_FETCHED, LOADING_DATA, LOADING_ERROR } from '../constants/action-types';
+    UPDATE_SCORE, DATA_FETCHED, LOADING_DATA, LOADING_ERROR, REMOVE_TEAM } from '../constants/action-types';
 
 export function loadingError(bool) {
     return {
@@ -29,6 +29,21 @@ function updateQual(teams, index1, index2, round) {
 export function updateQualifier(teams, index1, index2, round) {
     return dispatch => {
         dispatch(updateQual(teams, index1, index2, round))
+    }
+}
+
+function removeMatch(round, match, home) {
+    return {
+        type: REMOVE_TEAM,
+        round: round,
+        match: match,
+        home: home
+    };
+}
+
+export function removeTeam(round, match, home) {
+    return dispatch => {
+        dispatch(removeMatch(round, match, home))
     }
 }
 
