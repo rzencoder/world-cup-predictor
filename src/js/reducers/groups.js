@@ -21,7 +21,7 @@ export function loadingData(state = false, action) {
   }
 }
 
-export function items(state = [], action) {
+export function groups(state = [], action) {
   switch (action.type) {
     case DATA_FETCHED:
       return action.data;

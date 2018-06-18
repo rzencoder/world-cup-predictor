@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import { items, loadingError, loadingData } from './groups';
+import { groups, loadingError, loadingData } from './groups';
 import { knockouts } from './knockouts';
 
 export default combineReducers({
-    items,
+    groups,
     knockouts,
     loadingError,
     loadingData,

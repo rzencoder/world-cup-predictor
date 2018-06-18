@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import dateFormater from '../helpers/dateFormater.js';
-import timeConverter from '../helpers/timeConverter.js';
 import { updateScore } from '../actions/index';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    items: state.items
+    groups: state.groups
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     updateScore: (group, index, score, home) => dispatch(updateScore(group, index, score, home))
   };
@@ -31,47 +30,54 @@ class GroupGames extends Component {
     this.score2Input = React.createRef();
   }
 
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-    let home = name === 'homeScore' ? 1 : 2;  
+  handleInputChange (e) {
+    const name = e.target.name;
+    const home = name === 'homeScore' ? 1 : 2;  
     this.setState({
-      [name]: value
-    }, this.updateTable(value, home));
+      [name]: e.target.value
+    }, () => this.updateTable(e.target.value, home));
   }
 
-  updateTable(value, home) {
+  updateTable (value, home) {
     this.props.updateScore(this.props.group, this.props.index, value, home);
   }
 
   changeScoreClick (e) {
+    // Check if user increased or decreased score
     const incOrDec = e.target.className;
+    // Check using refs is the home or away team was clicked
     const id = e.currentTarget.parentNode.id;
-    const ref = id === 'home' ? this.score1Input.current.value : this.score2Input.current.value
+    const ref = id === 'home' ? this.score1Input.current.value : this.score2Input.current.value;
+    // If value was empty convert to 0
     const input = ref === "" ? 0 : ref;
-    let value = incOrDec === "up" ? parseInt(input) + 1 : parseInt(input) - 1;
+    // Add or remove 1 and prevent negative number;
+    let value = incOrDec === "up" ? parseInt(input, 10) + 1 : parseInt(input, 10) - 1;
     value = value < 0 ? 0 : value;
     const name = id + 'Score';
     const home = id === 'home' ? 1 : 2;
     this.setState({
       [name]: value
-    }, this.updateTable(value, home));
+    }, () => this.updateTable(value, home));
   }
   
   render() {
-    const data = this.props.items[this.props.group]['matches'][this.props.index];
+
+    const data = this.props.groups[this.props.group]['matches'][this.props.index];
+
+    //If goals scored display list of scorers
     let homeScorers = [];
     let awayScorers = [];
     if (data.goals1 || data.goals2) {
       homeScorers = data.goals1.map((el, i) => {
-        return <div key={'a'+i}><i className="fas fa-futbol"></i> '{el.minute} {el.name}</div>
+        return <div key={i}><i className="fas fa-futbol"></i> '{el.minute} {el.name}</div>
       });
       awayScorers = data.goals2.map((el, i) => {
-        return <div key={'b' + i}><i className="fas fa-futbol"></i> '{el.minute} {el.name}</div>
+        return <div key={i}><i className="fas fa-futbol"></i> '{el.minute} {el.name}</div>
       });
     }   
+
     const score = <span className="group-time">{data.score1} : {data.score2}</span>;
+
     const prediction = (
       <div className="prediction-container">
         <div id="home">
@@ -98,10 +104,12 @@ class GroupGames extends Component {
           </div>
           <div onClick={this.changeScoreClick} className="down"></div>
         </div>
-        </div>
+      </div>
     )
+
     const displayScoreOrTime = data.confirmed  ? score : prediction;
     const predictClass = data.confirmed ? "" : "predict";
+    
     return (
       <div className="group-match-container">    
         <div>

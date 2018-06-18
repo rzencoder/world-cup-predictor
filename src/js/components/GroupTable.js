@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import FlagIcon from './FlagIcon.js';
 import codeConverter from '../data/flagCodes.js';
-import { itemsFetchData, updateQualifier } from '../actions/index';
-import {advance} from '../data/matchData';
+import { updateQualifier } from '../actions/index';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    items: state.items,
+    groups: state.groups,
     knockouts: state.knockouts
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     updateQualifier: (teams, index1, index2, round) => dispatch(updateQualifier(teams, index1, index2, round)),
     
@@ -23,23 +22,26 @@ class GroupTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      teams: [],
-      qualified: []
+      teams: []
     };
 
     this.calculateTable = this.calculateTable.bind(this)
   }
 
-  componentDidUpdate(prevProps) {
-      // Typical usage (don't forget to compare props):
-      if (this.props.data !== prevProps.data) {
-        this.calculateTable();
-      }
-    }
+  componentDidMount () {
+    this.initializeTable();
+  }
 
-  calculateTable () {
+  componentDidUpdate (prevProps) {
+    if (this.props.data !== prevProps.data) {
+      this.initializeTable();
+    }
+  }
+
+  initializeTable () {
     let teams = [];
     const group = this.props.data;
+    //Mapping each team with table data then filtering out any duplicate 2 teams
     group.matches.map(el => [el.team1.name, el.team1.code])
       .map(el => {
         return {
@@ -52,13 +54,21 @@ class GroupTable extends Component {
           pts: 0
         };
       }).filter(el => {
-        const i = teams.findIndex(x => x.name === el.name);
-        if (i <= -1) teams.push(el);
-        return null;
+          const i = teams.findIndex(x => x.name === el.name);
+          if (i <= -1) teams.push(el);
+          return null;
       });
-    
-    group.matches.forEach(match => {
       
+      this.setState({
+        teams: teams
+      }, () => this.calculateTable())
+  }
+
+  calculateTable () {
+    const group = this.props.data;
+    const teams = this.state.teams;
+    //Filter through matches extract results and update table stats
+    group.matches.forEach(match => {   
       let homeTeam;
       let awayTeam;
       teams.forEach(team => {
@@ -66,8 +76,8 @@ class GroupTable extends Component {
         if (team.name === match.team2.name) awayTeam = team;
       });
       const result = match.score1 - match.score2;
-
-      if(match.score1 === null) {}
+      //Logic for updating table stats
+      if (match.score1 === null) {}
       else if (result > 0) {
         homeTeam.won += 1;
         homeTeam.gd += result;
@@ -88,42 +98,40 @@ class GroupTable extends Component {
       }
 
     });
+
+    //Sort table by points and goal difference
     const sortedTeams = teams.sort((a, b) => a.gd < b.gd)
       .sort((a, b) => a.pts < b.pts);
 
-    let firstPlace;
-    let secondPlace;
-    let a = advance[0].matches.filter(el => {
-      if (el.team1 === this.props.index) firstPlace = el.num;
-      if (el.team2 === this.props.index) secondPlace = el.num;
-      return null;
-    });
+    this.setState({
+      teams: sortedTeams
+    }, () => this.calculateQualifiers());
 
+  }
+
+  calculateQualifiers () {
+    const { teams } = this.state;
     let firstIndex;
     let secondIndex;
 
+    //Get the match that the qualifiers will play next
     this.props.knockouts[0]['matches'].filter((el, i)=> {
-      if(this.props.first === el.num) firstIndex = i;
+      if (this.props.first === el.num) firstIndex = i;
       if (this.props.second === el.num) secondIndex = i;
+      return null;
     })
 
     const qualified =  [ 
-        { num: 49, name: sortedTeams[0]['name'], code: sortedTeams[0]['code'] },
-        { num: 49, name: sortedTeams[1]['name'], code: sortedTeams[1]['code'] }
+        { num: 49, name: teams[0]['name'], code: teams[0]['code'] },
+        { num: 49, name: teams[1]['name'], code: teams[1]['code'] }
       ];
 
     this.props.updateQualifier(qualified, firstIndex, secondIndex, 0)
 
-   this.setState({ 
-     teams: sortedTeams
-  });
-  }
-
-  componentWillMount () {
-    this.calculateTable();
   }
 
   render() {
+
     const teams = this.state.teams.map((el, i) => {
       return (
         <tr key={i}>
@@ -137,6 +145,7 @@ class GroupTable extends Component {
         </tr>
       )
     });
+
     return (
       <div>
         <h2 className="group-title">{this.props.name}</h2>

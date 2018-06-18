@@ -11,6 +11,8 @@ const flagCodes = [{code3: 'AUS', code2: 'au'}, {code3: 'ARG', code2: 'ar'}, {co
 {code3: 'CIV', code2: 'ci'}, {code3: 'USA', code2: 'us'}, {code3: 'CHI', code2: 'cl'} , {code3: 'GHA', code2: 'gh'}
 ];
 
+//Converter data from api from 3 digit to 2 digit code so able to use the svg flags
+
 const codeConverter = code => {
   const flagCode = flagCodes.filter(el => {
     return el.code3 === code;

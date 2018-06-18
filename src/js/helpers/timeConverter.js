@@ -1,3 +1,5 @@
+//Convert api time to GMT time
+
 const timeConverter = (time, zone) => {
     let zoneDiff = 2;
     if (zone === 'UTC+4') zoneDiff = 3;
