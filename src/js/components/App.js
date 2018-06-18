@@ -7,7 +7,7 @@ import Knockout from './Knockout.js';
 import KnockoutMatch from './KnockoutMatch.js';
 
 import { fetchData } from '../actions/index';
-import { advance } from '../js/matchData';
+import { advance } from '../data/matchData';
 import { GAMES_API } from '../constants/api';
 
 const mapStateToProps = (state) => {

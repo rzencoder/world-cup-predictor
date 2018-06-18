@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import dateFormater from '../js/dateFormater.js';
-import timeConverter from '../js/timeConverter.js';
+import dateFormater from '../helpers/dateFormater.js';
+import timeConverter from '../helpers/timeConverter.js';
 import { updateScore } from '../actions/index';
 
 const mapStateToProps = (state) => {

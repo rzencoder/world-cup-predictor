@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import FlagIcon from './FlagIcon.js';
-import codeConverter from '../js/flagCodes.js';
+import codeConverter from '../data/flagCodes.js';
 import { itemsFetchData, updateQualifier } from '../actions/index';
-import {advance} from '../js/matchData';
+import {advance} from '../data/matchData';
 
 const mapStateToProps = (state) => {
   return {

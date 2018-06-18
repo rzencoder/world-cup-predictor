@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from "react-redux"
 import './sass/index.css';
-import App from './components/App';
+import App from './js/components/App';
 import registerServiceWorker from './js/registerServiceWorker';
 
-import configureStore from './store/configureStore';
+import configureStore from './js/store/configureStore';
 const store = configureStore();
 
 ReactDOM.render(

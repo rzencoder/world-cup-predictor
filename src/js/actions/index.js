@@ -1,4 +1,4 @@
-import { tempMatches } from '../js/matchData';
+import { tempMatches } from '../data/matchData';
 import { KNOCKOUT_DATA_FETCHED, UPDATE_QUALIFIER, UPDATE_KNOCKOUT,
     UPDATE_SCORE, DATA_FETCHED, LOADING_DATA, LOADING_ERROR } from '../constants/action-types';
 

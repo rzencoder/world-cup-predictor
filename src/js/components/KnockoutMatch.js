@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import FlagIcon from './FlagIcon.js';
-import codeConverter from '../js/flagCodes.js';
+import codeConverter from '../data/flagCodes.js';
 import HoverInfo from './HoverInfo.js';
-import dateFormater from '../js/dateFormater.js';
+import dateFormater from '../helpers/dateFormater.js';
 import { updateKnockout } from '../actions/index';
 
 const mapStateToProps = (state) => {
