@@ -1,90 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import placeholderArray from '../js/placeholderData.js';
 
 import GroupTable from './GroupTable.js';
 import GroupGames from './GroupGames.js';
 import Knockout from './Knockout.js';
-import PlaceholderMatch from './PlaceholderMatch.js';
 import KnockoutMatch from './KnockoutMatch.js';
-import { itemsFetchData } from '../actions/index';
 
-const GAMES_API = 'https://raw.githubusercontent.com/openfootball/world-cup.json/master/2018/worldcup.json';
-
-const advance = [
-       {
-           round: "Last 16",
-           matches: [
-               { group: 0, num: [ 50, 51 ] },
-               { group: 1, num: [ 51, 50 ] },
-               { group: 2, num: [ 49, 52 ] },
-               { group: 3, num: [ 52, 49 ] },
-               { group: 4, num: [ 53, 55 ] },
-               { group: 5, num: [ 55, 53 ] },
-               { group: 6, num: [ 54, 56 ] },
-               { group: 7, num: [ 56, 54 ] },
-           ]
-       },
-       {
-           round: "Quarter Finals",
-           matches: [
-               { group: 0, num: 57, index: 0 },
-               { group: 1, num: 57, index: 1 },
-               { group: 2, num: 58, index: 0 },
-               { group: 3, num: 58, index: 1 },
-               { group: 4, num: 59, index: 0 },
-               { group: 5, num: 59, index: 1 },
-               { group: 6, num: 60, index: 0 },
-               { group: 7, num: 60, index: 1 }
-           ]
-       },
-       {
-           round: "Semi Finals",
-           matches: [
-              { group: 0, num: 61, index: 0 },
-               { group: 1, num: 61, index: 1 },
-               { group: 2, num: 62, index: 0 },
-               { group: 3, num: 62, index: 1 }
-           ]
-       },
-        {
-           round: "Final",
-           matches: [
-               { group: 0, num: 64, index: 0 },
-               { group: 1, num: 64, index: 1 }
-           ]
-       },
-       {
-           round: "Final",
-           matches: [
-               { group: 0, num: 64, index: 0 },
-               { group: 1, num: 64, index: 1 }
-           ]
-       },
-   ];
+import { fetchData } from '../actions/index';
+import { advance } from '../js/matchData';
+import { GAMES_API } from '../constants/api';
 
 const mapStateToProps = (state) => {
   return {
     items: state.items,
     knockouts: state.knockouts,
-    hasErrored: state.itemsHasErrored,
-    isLoading: state.itemsIsLoading
+    loadingError: state.loadingError,
+    isLoading: state.loadingData
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchData: (url) => dispatch(itemsFetchData(url))
+    fetchData: (url) => dispatch(fetchData(url))
   };
 };
-
-const placeholderGames = placeholderArray.map(round => {
-  return { matches:
-    round.matches.map((match, i) => {
-      return <PlaceholderMatch key={i} data={match} />
-    })
-  }
-});
 
 class App extends Component {
   constructor(props) {
@@ -118,7 +57,7 @@ class App extends Component {
   }
 
   render() {
-    if (this.props.hasErrored) {
+    if (this.props.loadingError) {
       return <p>Sorry! There was an error loading the items</p>;
     }
 

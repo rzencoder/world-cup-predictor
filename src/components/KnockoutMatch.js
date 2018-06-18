@@ -63,8 +63,15 @@ class KnockoutMatch extends Component {
     });
     const home = 'team' + this.props.home;
 
-    this.props.updateKnockout(teams, firstIndex, this.props.round, home);}
+    this.props.updateKnockout(teams, firstIndex, this.props.round, home);
+    this.checkFutureRounds(teams)
   }
+  }
+
+  checkFutureRounds () {
+
+  }
+
 
   updateTable(value, home) {
     this.props.updateScore(this.props.group, this.props.index, value, home);

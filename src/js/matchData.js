@@ -1,4 +1,4 @@
-const list = [{ "name": "Round of 16",
+export const tempMatches = [{ "name": "Round of 16",
       "matches": [
         {
           "num": 49,
@@ -453,20 +453,138 @@ const list = [{ "name": "Round of 16",
       ]
     }];
 
-   const advance = [
-       {
-           round: "Last 16",
-           matches: [
-               { group: 0, num: [ { first: 49, second: 50 } ] },
-               { group: 1, num: [ { first: 50, second: 51 } ] },
-               { group: 2, num: [ { first: 51, second: 52 } ] },
-               { group: 3, num: [ { first: 52, second: 53 } ] },
-               { group: 4, num: [ { first: 53, second: 54 } ] },
-               { group: 5, num: [ { first: 54, second: 55 } ] },
-               { group: 6, num: [ { first: 55, second: 56 } ] },
-               { group: 7, num: [ { first: 56, second: 49 } ] },
-           ]
-       }
-   ];
+  export const advance = [{
+        round: "Last 16",
+        matches: [{
+            group: 0,
+            num: [50, 51]
+          },
+          {
+            group: 1,
+            num: [51, 50]
+          },
+          {
+            group: 2,
+            num: [49, 52]
+          },
+          {
+            group: 3,
+            num: [52, 49]
+          },
+          {
+            group: 4,
+            num: [53, 55]
+          },
+          {
+            group: 5,
+            num: [55, 53]
+          },
+          {
+            group: 6,
+            num: [54, 56]
+          },
+          {
+            group: 7,
+            num: [56, 54]
+          },
+        ]
+      },
+      {
+        round: "Quarter Finals",
+        matches: [{
+            group: 0,
+            num: 57,
+            index: 0
+          },
+          {
+            group: 1,
+            num: 57,
+            index: 1
+          },
+          {
+            group: 2,
+            num: 58,
+            index: 0
+          },
+          {
+            group: 3,
+            num: 58,
+            index: 1
+          },
+          {
+            group: 4,
+            num: 59,
+            index: 0
+          },
+          {
+            group: 5,
+            num: 59,
+            index: 1
+          },
+          {
+            group: 6,
+            num: 60,
+            index: 0
+          },
+          {
+            group: 7,
+            num: 60,
+            index: 1
+          }
+        ]
+      },
+      {
+        round: "Semi Finals",
+        matches: [{
+            group: 0,
+            num: 61,
+            index: 0
+          },
+          {
+            group: 1,
+            num: 61,
+            index: 1
+          },
+          {
+            group: 2,
+            num: 62,
+            index: 0
+          },
+          {
+            group: 3,
+            num: 62,
+            index: 1
+          }
+        ]
+      },
+      {
+        round: "Final",
+        matches: [{
+            group: 0,
+            num: 64,
+            index: 0
+          },
+          {
+            group: 1,
+            num: 64,
+            index: 1
+          }
+        ]
+      },
+      {
+        round: "Final",
+        matches: [{
+            group: 0,
+            num: 64,
+            index: 0
+          },
+          {
+            group: 1,
+            num: 64,
+            index: 1
+          }
+        ]
+      },
+    ];
+  
 
-   export default list;

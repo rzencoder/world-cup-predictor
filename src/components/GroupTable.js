@@ -2,23 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import FlagIcon from './FlagIcon.js';
 import codeConverter from '../js/flagCodes.js';
-import { itemsFetchData, updateQual } from '../actions/index';
-
-   const advance = [
-       {
-           round: "Last 16",
-           matches: [
-               { num: 49, team1: 2, team2: 3 },
-               { num: 50, team1: 0, team2: 1 },
-               { num: 51, team1: 1, team2: 0 },
-               { num: 52, team1: 3, team2: 2 },
-               { num: 53, team1: 4, team2: 5 },
-               { num: 54, team1: 6, team2: 7 },
-               { num: 55, team1: 5, team2: 4 },
-               { num: 56, team1: 7, team2: 6 }
-           ]
-       }
-   ];
+import { itemsFetchData, updateQualifier } from '../actions/index';
+import {advance} from '../js/matchData';
 
 const mapStateToProps = (state) => {
   return {
@@ -29,7 +14,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateQual: (teams, index1, index2, round) => dispatch(updateQual(teams, index1, index2, round)),
+    updateQualifier: (teams, index1, index2, round) => dispatch(updateQualifier(teams, index1, index2, round)),
     
   };
 };
@@ -127,7 +112,7 @@ class GroupTable extends Component {
         { num: 49, name: sortedTeams[1]['name'], code: sortedTeams[1]['code'] }
       ];
 
-    this.props.updateQual(qualified, firstIndex, secondIndex, 0)
+    this.props.updateQualifier(qualified, firstIndex, secondIndex, 0)
 
    this.setState({ 
      teams: sortedTeams

@@ -1,23 +1,24 @@
-import list from '../state';
+import { tempMatches } from '../js/matchData';
+import { KNOCKOUT_DATA_FETCHED, UPDATE_QUALIFIER, UPDATE_KNOCKOUT,
+    UPDATE_SCORE, DATA_FETCHED, LOADING_DATA, LOADING_ERROR } from '../constants/action-types';
 
-
-export function itemsHasErrored(bool) {
+export function loadingError(bool) {
     return {
-        type: 'ITEMS_HAS_ERRORED',
-        hasErrored: bool
+        type: LOADING_ERROR,
+        isError: bool
     };
 }
 
-export function itemsIsLoading(bool) {
+export function loadingData(bool) {
     return {
-        type: 'ITEMS_IS_LOADING',
+        type: LOADING_DATA,
         isLoading: bool
     };
 }
 
-export function updateQualifier(teams, index1, index2, round) {
+function updateQual(teams, index1, index2, round) {
     return {
-        type: 'UPDATE_QUALIFIER',
+        type: UPDATE_QUALIFIER,
         teams: teams,
         index1: index1,
         index2: index2,
@@ -25,15 +26,15 @@ export function updateQualifier(teams, index1, index2, round) {
     };
 }
 
-export function updateQual(teams, index1, index2, round) {
-    return (dispatch) => {
-        dispatch(updateQualifier(teams, index1, index2, round))
+export function updateQualifier(teams, index1, index2, round) {
+    return dispatch => {
+        dispatch(updateQual(teams, index1, index2, round))
     }
 }
 
-export function updateKnock(teams, index1, round, home) {
+function updateKnock(teams, index1, round, home) {
     return {
-        type: 'UPDATE_KNOCKOUT',
+        type: UPDATE_KNOCKOUT,
         teams: teams,
         index1: index1,
         round: round,
@@ -42,14 +43,14 @@ export function updateKnock(teams, index1, round, home) {
 }
 
 export function updateKnockout(teams, index1, round, home) {
-    return (dispatch) => {
+    return dispatch => {
         dispatch(updateKnock(teams, index1, round, home))
     }
 }
 
 export function updateGoal(group, index, score, home) {
     return {
-        type: 'UPDATE_SCORE',
+        type: UPDATE_SCORE,
         group: group,
         index: index,
         score: score,
@@ -58,36 +59,42 @@ export function updateGoal(group, index, score, home) {
 }
 
 export function updateScore(group, index, score, home) {
-    return (dispatch) => {
+    return dispatch => {
         dispatch(updateGoal(group, index, score, home))
     }
 }
 
-export function itemsFetchDataSuccess(data) {
+export function groupsFetched(data) {
     return {
-        type: 'ITEMS_FETCH_DATA_SUCCESS',
+        type: DATA_FETCHED,
         data
     };
 }
 
 export function fetchKnockouts(data) {
     return {
-        type: 'FETCH_KNOCKOUTS',
+        type: KNOCKOUT_DATA_FETCHED,
         data
     };
 }
 
-function processData (data) {
+// Organise data collected from api and replace with temp matches if match fixture has not been played yet
+function processInitialState (data) {
+    //Separate groups from knockout games
     const groupGames = data.rounds.slice(0, 15);
     let knockoutGames = data.rounds.slice(15, 18)
     knockoutGames.push(data.rounds[19]);
+
     const groupNames = ['Group A', 'Group B', 'Group C', 'Group D', 'Group E', 'Group F', 'Group G', 'Group H'];
     
+    //Map over each group name and find matches in the api response with the same group name
+    //Return with array of  objects of groups with group matches
     const groups = groupNames.map((name, i) => {
         let sortedGames = [];
         groupGames.filter((game, i) => {                 
           return game.matches.forEach(match => {
-            if(match.group === name) {
+            //Add match confirmed prop if fixture has been played
+            if (match.group === name) {
                 match.confirmed = true;
                 if (match.score1 === null) match.confirmed = false;
                 sortedGames.push(match);
@@ -95,42 +102,40 @@ function processData (data) {
           });
         });
         return { name: name, matches: sortedGames }    
-    });
-    
-       if(!knockoutGames[0]['matches'].length) {
-            knockoutGames = list
-       }
-       function swapElement(array, indexA, indexB) {
-           var tmp = array[indexA];
-           array[indexA] = array[indexB];
-           array[indexB] = tmp;
-       }
-       swapElement(knockoutGames[0]['matches'], 2, 4);
-       swapElement(knockoutGames[0]['matches'], 3, 5);
-       
+    }); 
+
+    //if no knockout games played replace api data with temp match data
+    if (!knockoutGames[0]['matches'].length) {
+        knockoutGames = tempMatches;
+    }
+
+    //Swap over 'Round of 16' matches so correct teams will meet in the next round
+    function swapElement(array, indexA, indexB) {
+        let temp = array[indexA];
+        array[indexA] = array[indexB];
+        array[indexB] = temp;
+    }
+    swapElement(knockoutGames[0]['matches'], 2, 4);
+    swapElement(knockoutGames[0]['matches'], 3, 5);
 
     return { groupGames: groups, knockoutGames: knockoutGames }
 }
 
-export function itemsFetchData(url) {
-    
-    return (dispatch) => {
-        dispatch(itemsIsLoading(true));
+export function fetchData(url) {
+    return dispatch => {
+        dispatch(loadingData(true));
         fetch(url)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-               
+            .then(response => {
+                if (!response.ok) throw Error(response.statusText);           
                 return response;
             })
-            .then((response) => response.json())
-            .then((data) => {
-                const processedData = processData(data);
-                 dispatch(itemsFetchDataSuccess(processedData.groupGames));
-                 dispatch(fetchKnockouts(processedData.knockoutGames));
+            .then(response => response.json())
+            .then(data => {
+                const processedData = processInitialState(data);
+                dispatch(groupsFetched(processedData.groupGames));
+                dispatch(fetchKnockouts(processedData.knockoutGames));
             })
-            .then(() => dispatch(itemsIsLoading(false)))
-            .catch(() => dispatch(itemsHasErrored(true)));
+            .then(() => dispatch(loadingData(false)))
+            .catch(() => dispatch(loadingError(true)));
     };
 }
