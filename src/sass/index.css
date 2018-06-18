@@ -122,6 +122,9 @@ table {
   text-align: center;
   font-size: 24px;
   font-weight: 700; }
+  @media (max-width: 550px) {
+    .links {
+      width: 80%; } }
   .links .link-container {
     display: flex;
     flex-wrap: wrap;
@@ -146,7 +149,8 @@ table {
   text-align: center;
   padding: 10px;
   border-radius: 3px;
-  font-size: 17px; }
+  font-size: 17px;
+  overflow: hidden; }
   @media (max-width: 700px) {
     .info-panel {
       width: 80%; } }
@@ -259,14 +263,14 @@ table {
   text-align: center;
   width: 25%;
   background: #e6ecef;
-  padding-bottom: 40px; }
-  @media (max-width: 800px) {
+  padding-bottom: 50px; }
+  @media (max-width: 1000px) {
     .knockout-stage {
       width: 100%;
       background: initial; } }
   .knockout-stage:nth-of-type(2n) {
     background: #d7e9ef; }
-    @media (max-width: 800px) {
+    @media (max-width: 1000px) {
       .knockout-stage:nth-of-type(2n) {
         background: initial; } }
   .knockout-stage h2 {
@@ -274,7 +278,7 @@ table {
     font-family: "Russo One", sans-serif;
     font-weight: 700;
     padding: 10px; }
-    @media (max-width: 800px) {
+    @media (max-width: 1000px) {
       .knockout-stage h2 {
         font-size: 32px; } }
 
@@ -283,11 +287,14 @@ table {
   flex-direction: row;
   padding: 20px;
   justify-content: space-around; }
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     .knockout-container {
       flex-direction: column;
-      width: 80%;
+      width: 70%;
       margin: 0 auto; } }
+  @media (max-width: 600px) {
+    .knockout-container {
+      width: 90%; } }
 
 .knockout-round-container {
   display: flex;
@@ -296,7 +303,7 @@ table {
   height: 100%;
   width: 90%;
   margin: 0 auto; }
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     .knockout-round-container {
       height: auto;
       width: auto;
@@ -319,13 +326,13 @@ table {
   font-size: 18px;
   position: relative;
   cursor: pointer; }
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     .knockout-team {
       cursor: initial; } }
   .knockout-team:hover .hover-info-container {
     opacity: 1;
     display: block; }
-    @media (max-width: 800px) {
+    @media (max-width: 1000px) {
       .knockout-team:hover .hover-info-container {
         opacity: 0;
         display: none; } }
@@ -335,17 +342,18 @@ table {
   .knockout-team .knockout-scorers {
     display: none;
     font-size: 13px;
-    text-align: left;
-    padding: 3px 7px; }
-    @media (max-width: 800px) {
+    text-align: left; }
+    @media (max-width: 1000px) {
       .knockout-team .knockout-scorers {
         display: block; } }
+    .knockout-team .knockout-scorers > div {
+      padding: 3px 7px; }
 
 .knockout-date {
   font-size: 15px;
   font-weight: 700;
   padding: 5px; }
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     .knockout-date {
       font-size: 17px; } }
 
@@ -403,7 +411,7 @@ table {
   left: -13%;
   top: 50%;
   border-top: 3px solid #444; }
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     .bracket-team::before {
       display: none; } }
 
@@ -415,7 +423,7 @@ table {
   right: -10px;
   border-color: #444;
   border-width: 3px; }
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     .bracket-team::after {
       display: none; } }
 
@@ -500,19 +508,33 @@ table {
 .knockout-prediction {
   width: 100%;
   display: flex;
-  justify-content: flex-end; }
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 16px; }
   .knockout-prediction input {
-    width: 30px; }
+    width: 1.7em;
+    font-size: 1em;
+    padding: 2px 0 2px 5px;
+    text-align: right; }
   .knockout-prediction .up, .knockout-prediction .down {
     background: #555;
     color: white;
-    padding: 0 2px;
+    padding: 0 0.2em;
     border-radius: 4px;
-    width: 12px; }
+    width: 0.6em;
+    cursor: pointer; }
+    .knockout-prediction .up:hover, .knockout-prediction .down:hover {
+      background: #777; }
   .knockout-prediction .up {
-    margin-left: 3px; }
+    margin-left: 0.2em; }
   .knockout-prediction .down {
-    margin-right: 3px; }
+    margin-right: 0.2em; }
+  @media (min-width: 500px) {
+    .knockout-prediction {
+      font-size: 24px; } }
+  @media (min-width: 1000px) {
+    .knockout-prediction {
+      font-size: 18px; } }
 
 body {
   font-family: "Oxygen", arial, sans-serif;

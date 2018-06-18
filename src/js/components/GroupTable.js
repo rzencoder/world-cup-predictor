@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import PropTypes from 'prop-types';
+
 import FlagIcon from './FlagIcon.js';
 import codeConverter from '../data/flagCodes.js';
 import { updateQualifier } from '../actions/index';
@@ -169,5 +171,15 @@ class GroupTable extends Component {
     );
   }
 }
+
+GroupTable.propTypes = {
+  groups: PropTypes.array.isRequired,
+  knockouts: PropTypes.array.isRequired,
+  first: PropTypes.number.isRequired,
+  second: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  updateQualifier: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupTable);

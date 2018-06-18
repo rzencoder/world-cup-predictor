@@ -9,7 +9,7 @@
         left: -13%;
         top: 50%;
         border-top: 3px solid $bracket-color;
-        @media(max-width: 800px) {
+        @media(max-width: 1000px) {
             display: none;
         }
     }   
@@ -21,7 +21,7 @@
         right: -10px;
         border-color: $bracket-color;
         border-width: 3px;    
-        @media(max-width: 800px) {
+        @media(max-width: 1000px) {
             display: none;
         }
     }

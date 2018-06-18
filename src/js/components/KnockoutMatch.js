@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import PropTypes from 'prop-types';
+
 import FlagIcon from './FlagIcon.js';
 import codeConverter from '../data/flagCodes.js';
 import HoverInfo from './HoverInfo.js';
@@ -28,7 +30,6 @@ class KnockoutMatch extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.calculateResult = this.calculateResult.bind(this);
     this.changeScoreClick = this.changeScoreClick.bind(this);
-    this.updateTable = this.updateTable.bind(this);
     this.score1Input = React.createRef();
     this.score2Input = React.createRef();
   }
@@ -73,10 +74,6 @@ class KnockoutMatch extends Component {
 
   checkFutureRounds () {
 
-  }
-
-  updateTable (value, home) {
-    this.props.updateScore(this.props.group, this.props.index, value, home);
   }
 
   changeScoreClick (e) {
@@ -167,7 +164,8 @@ class KnockoutMatch extends Component {
               </div>   
               <div className="knockout-score">
                 {this.props.data.score1 === null ? '' : <span>{this.calculateScore(this.props.data, 1)}</span>}
-                {this.props.data.score1 === null ? homePrediction : ''}
+                {this.props.data.score1 === null && this.props.data.team1.name !== null 
+                   && this.props.data.team2.name !== null ? homePrediction : '' }
               </div>
             </div>
             <div className="knockout-scorers">
@@ -183,8 +181,9 @@ class KnockoutMatch extends Component {
               </div>
               {awayScorers.length ? <HoverInfo data={awayScorers}/> : ''}
               <div className="knockout-score">
-                {this.props.data.score1 === null ? '' : <span>{this.calculateScore(this.props.data, 2)}</span>}
-                {this.props.data.score1 === null ? awayPrediction : ''}
+                {this.props.data.score2 === null ? '' : <span>{this.calculateScore(this.props.data, 2)}</span>}
+                {this.props.data.score2 === null && this.props.data.team1.name !== null 
+                   && this.props.data.team2.name !== null ? awayPrediction : '' }
               </div>
              </div>
              <div className="knockout-scorers">
@@ -198,5 +197,14 @@ class KnockoutMatch extends Component {
     );
   }
 }
+
+KnockoutMatch.propTypes = {
+  knockouts: PropTypes.array.isRequired,
+  updateKnockout: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+  first: PropTypes.number.isRequired,
+  round: PropTypes.number.isRequired,
+  home: PropTypes.number.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(KnockoutMatch);

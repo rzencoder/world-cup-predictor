@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import PropTypes from 'prop-types';
+
 import dateFormater from '../helpers/dateFormater.js';
 import { updateScore } from '../actions/index';
 
@@ -135,5 +137,12 @@ class GroupGames extends Component {
     );
   }
 }
+
+GroupGames.propTypes = {
+  groups: PropTypes.array.isRequired,
+  index: PropTypes.number.isRequired,
+  group: PropTypes.number.isRequired,
+  updateScore: PropTypes.func.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupGames);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 
 import GroupTable from './GroupTable.js';
 import GroupGames from './GroupGames.js';
@@ -9,6 +10,8 @@ import KnockoutMatch from './KnockoutMatch.js';
 import { fetchData } from '../actions/index';
 import { advance } from '../data/matchData';
 import { GAMES_API } from '../constants/api';
+
+const GAMES_API_R = 'https://raw.githubusercontent.com/openfootball/world-cup.json/master/2018/worldcup.json';
 
 const mapStateToProps = state => {
   return {
@@ -36,6 +39,7 @@ class App extends Component {
     }
     this.toggleRound = this.toggleRound.bind(this);
     this.closeInfo = this.closeInfo.bind(this);
+    this.toggleCompetition = this.toggleCompetition.bind(this)
   }
 
   componentDidMount () {
@@ -46,6 +50,10 @@ class App extends Component {
     this.setState({
       knockout: !this.state.knockout
     });
+  }
+
+  toggleCompetition () {
+    this.props.fetchData(GAMES_API_R);
   }
 
   closeInfo = () => {
@@ -150,6 +158,7 @@ class App extends Component {
     return (
       <div className="app">
         <h1 className="title">World Cup 2018 Russia</h1>
+        <button onClick={this.toggleCompetition}></button>
         {this.state.showInfo && infoPanel} 
         <div className="container">      
           <div className="round-selector">
@@ -164,5 +173,13 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  loadingError: PropTypes.bool.isRequired,
+  groups: PropTypes.array.isRequired,
+  knockouts: PropTypes.array.isRequired,
+  fetchData: PropTypes.func.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
