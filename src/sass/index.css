@@ -7,6 +7,7 @@
 @import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
 @import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
 @import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
+@import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -220,6 +221,9 @@ table {
   .group-teams > div {
     width: 40%; }
 
+.group-teams.predict {
+  align-items: center; }
+
 .group-time {
   width: 20%;
   font-weight: 700;
@@ -326,7 +330,8 @@ table {
         opacity: 0;
         display: none; } }
   .knockout-team > div {
-    display: flex; }
+    display: flex;
+    justify-content: space-between; }
   .knockout-team .knockout-scorers {
     display: none;
     font-size: 13px;
@@ -447,6 +452,67 @@ table {
 
 .bracket-4 .bracket-team:after {
   display: none; }
+
+.prediction-container {
+  display: flex;
+  width: 60px;
+  padding: 5px;
+  justify-content: space-between; }
+  .prediction-container .up {
+    position: relative;
+    height: 12px;
+    width: 18px;
+    margin: 3px 5px; }
+    .prediction-container .up::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 2px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0px 11px 12px 11px;
+      border-color: transparent transparent #44aacc transparent;
+      cursor: pointer; }
+  .prediction-container .down {
+    position: relative;
+    height: 15px;
+    width: 18px;
+    margin: 3px 5px; }
+    .prediction-container .down::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 2px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 12px 11px 0 11px;
+      border-color: #44aacc transparent transparent transparent;
+      cursor: pointer; }
+  .prediction-container input {
+    width: 30px;
+    height: 25px;
+    text-align: right;
+    font-size: 18px;
+    padding: 1px 0 1px 3px; }
+
+.knockout-prediction {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end; }
+  .knockout-prediction input {
+    width: 30px; }
+  .knockout-prediction .up, .knockout-prediction .down {
+    background: #555;
+    color: white;
+    padding: 0 2px;
+    border-radius: 4px;
+    width: 12px; }
+  .knockout-prediction .up {
+    margin-left: 3px; }
+  .knockout-prediction .down {
+    margin-right: 3px; }
 
 body {
   font-family: "Oxygen", arial, sans-serif;

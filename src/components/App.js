@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { connect } from "react-redux";
 import placeholderArray from '../js/placeholderData.js';
 
 import GroupTable from './GroupTable.js';
@@ -7,9 +7,76 @@ import GroupGames from './GroupGames.js';
 import Knockout from './Knockout.js';
 import PlaceholderMatch from './PlaceholderMatch.js';
 import KnockoutMatch from './KnockoutMatch.js';
+import { itemsFetchData } from '../actions/index';
 
-const GROUP_API = 'https://raw.githubusercontent.com/openfootball/world-cup.json/master/2018/worldcup.standings.json';
 const GAMES_API = 'https://raw.githubusercontent.com/openfootball/world-cup.json/master/2018/worldcup.json';
+
+const advance = [
+       {
+           round: "Last 16",
+           matches: [
+               { group: 0, num: [ 50, 51 ] },
+               { group: 1, num: [ 51, 50 ] },
+               { group: 2, num: [ 49, 52 ] },
+               { group: 3, num: [ 52, 49 ] },
+               { group: 4, num: [ 53, 55 ] },
+               { group: 5, num: [ 55, 53 ] },
+               { group: 6, num: [ 54, 56 ] },
+               { group: 7, num: [ 56, 54 ] },
+           ]
+       },
+       {
+           round: "Quarter Finals",
+           matches: [
+               { group: 0, num: 57, index: 0 },
+               { group: 1, num: 57, index: 1 },
+               { group: 2, num: 58, index: 0 },
+               { group: 3, num: 58, index: 1 },
+               { group: 4, num: 59, index: 0 },
+               { group: 5, num: 59, index: 1 },
+               { group: 6, num: 60, index: 0 },
+               { group: 7, num: 60, index: 1 }
+           ]
+       },
+       {
+           round: "Semi Finals",
+           matches: [
+              { group: 0, num: 61, index: 0 },
+               { group: 1, num: 61, index: 1 },
+               { group: 2, num: 62, index: 0 },
+               { group: 3, num: 62, index: 1 }
+           ]
+       },
+        {
+           round: "Final",
+           matches: [
+               { group: 0, num: 64, index: 0 },
+               { group: 1, num: 64, index: 1 }
+           ]
+       },
+       {
+           round: "Final",
+           matches: [
+               { group: 0, num: 64, index: 0 },
+               { group: 1, num: 64, index: 1 }
+           ]
+       },
+   ];
+
+const mapStateToProps = (state) => {
+  return {
+    items: state.items,
+    knockouts: state.knockouts,
+    hasErrored: state.itemsHasErrored,
+    isLoading: state.itemsIsLoading
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: (url) => dispatch(itemsFetchData(url))
+  };
+};
 
 const placeholderGames = placeholderArray.map(round => {
   return { matches:
@@ -26,40 +93,16 @@ class App extends Component {
       groups: [],
       games: [],
       knockout: false,
-      loadedGames: false,
+      loadedGames: true,
       loadedGroups: false,
       showInfo: true
     }
-    this.getGroups = this.getGroups.bind(this);
     this.toggleRound = this.toggleRound.bind(this);
     this.closeInfo = this.closeInfo.bind(this);
   }
 
   componentDidMount() {
-    this.getGroups();
-    this.getGames();
-  }
-
-  getGames() {
-    axios.get(GAMES_API)
-      .then(response => {
-        this.setState({
-          games: response.data.rounds,
-          loadedGames: true
-        });
-      })
-      .catch(error => console.log(error));
-  }
-
-  getGroups () {
-    axios.get(GROUP_API)
-      .then((response) => {
-        this.setState({
-          groups: response.data.groups,
-          loadedGroups: true
-        })
-      })
-      .catch(error => console.log(error));
+    this.props.fetchData(GAMES_API);
   }
 
   toggleRound () {
@@ -75,46 +118,52 @@ class App extends Component {
   }
 
   render() {
+    if (this.props.hasErrored) {
+      return <p>Sorry! There was an error loading the items</p>;
+    }
+
+    if (this.props.isLoading) {
+        return <p>Loading…</p>;
+    }
+
     let stage;
-    if (this.state.loadedGames && this.state.loadedGroups) {
+    if (this.props.items && this.props.knockouts.length) {
 
       //Sort Group Links
-      const links = this.state.groups.map((el, i) => {
+      const links = this.props.items.map((el, i) => {
         const letter = el.name[el.name.length - 1].toLowerCase();
         return <a key={i} href={"#group-" + letter}>{letter.toUpperCase()}</a>
       });
 
-      //Sorting data by round
-      const groupGames = this.state.games.slice(0, 15);   
-      const knockoutGames = this.state.games.slice(15, 18)
-      knockoutGames.push(this.state.games[19]);
 
-      //Sorting through games and mapping them to each group
-      const groups = this.state.groups.map((el, i) => {
-        const sortedGames = [];
-        groupGames.filter((game, i) => {      
-          return game.matches.forEach(match => {
-            if(match.group === el.name) sortedGames.push(match);
-          });
-        });    
-        const groupGamesComponentArray = sortedGames.map((data, i) => <GroupGames key={i} data={data} /> )
-        return (
-          <div key={i} id={"group-" + (el.name[el.name.length - 1]).toLowerCase()} className="group">
-            <GroupTable key={i} data={el} />
-            { groupGamesComponentArray }
-          </div>
-        )
-      });
-
+        const groups = this.props.items.map((el, i) => {
+          const games = el.matches.map((data, j) => <GroupGames key={j} group={i} index={j}/> );
+          let first;
+          let second;
+          advance[0]['matches'].filter(a => {
+            if (a.group === i) { 
+              first = a.num[0];
+              second = a.num[1];
+            }
+          })
+          return (
+            <div key={i} 
+                 id={"group-" + (el.name[el.name.length - 1]).toLowerCase()} 
+                 className="group">
+              <GroupTable key={i} name={el.name} first={first} second={second} data={el} index={i}/>
+              { games }
+            </div>
+          )
+        })
+       
+        let knockoutGames = this.props.knockouts;
       let knockoutList;
       if (knockoutGames.length > 1) {
-        knockoutList = placeholderGames.map((round, i) => {
+        knockoutList = knockoutGames.map((round, i) => {
           return round.matches.map((el, j) => {
-            if (knockoutGames[i]['matches'][j]) {
-             return <KnockoutMatch key={j} data={knockoutGames[i]['matches'][j]}/>
-            } else {
-              return el;
-            }
+            const first = advance[i+1]['matches'][j]['num'];
+            const home = advance[i + 1]['matches'][j]['index'];
+            return <KnockoutMatch key={j} round={i + 1} first={first} home={home+1} data={knockoutGames[i]['matches'][j]}/>
           });
        });
       }   
@@ -182,4 +231,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
