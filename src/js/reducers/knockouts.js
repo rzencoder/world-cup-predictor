@@ -41,7 +41,6 @@ export function knockouts (state = [], action) {
         })
     
     case REMOVE_TEAM:
-    console.log('delete')
         return update(state, {
           [action.round]: {
             matches: {

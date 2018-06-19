@@ -1,8 +1,8 @@
 {
-  "name": "world-cup",
+  "name": "world-cup-predictor",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://rzencoder.github.io/world-cup-tracker",
+  "homepage": "http://rzencoder.github.io/world-cup-predictor",
   "dependencies": {
     "axios": "^0.18.0",
     "flag-icon-css": "^3.0.0",

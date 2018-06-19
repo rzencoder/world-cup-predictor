@@ -11,8 +11,6 @@ import { fetchData } from '../actions/index';
 import { advance } from '../data/matchData';
 import { GAMES_API } from '../constants/api';
 
-const GAMES_API_R = 'https://raw.githubusercontent.com/openfootball/world-cup.json/master/2018/worldcup.json';
-
 const mapStateToProps = state => {
   return {
     groups: state.groups,
@@ -158,7 +156,7 @@ class App extends Component {
 
     return (
       <div className="app">
-        <a href="#" className="github-link"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/rzencoder/world-cup-predictor" className="github-link"><i className="fab fa-github"></i></a>
         <h1 className="title">World Cup 2018 Russia</h1>
         {this.state.showInfo && infoPanel} 
         <div className="container">      
