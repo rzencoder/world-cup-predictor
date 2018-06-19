@@ -22,12 +22,17 @@ const roundConverter = length => {
 
 class Knockout extends Component {
     render() {
+        //Display champions component if the current round is the final and a winner has been predicted
+        const displayChampions = (
+            this.props.champions.name !== null && this.props.round === 3 ? 
+            <Champions team={this.props.champions}/> : '' 
+        );
         return (          
             <div className="knockout-stage">
                 <h2>{roundConverter(this.props.data.length)}</h2> 
                 <div className={"knockout-round-container bracket-" + (this.props.round + 1)}>    
                     {this.props.data}
-                    {this.props.champions.name !== null && this.props.round === 3 ? <Champions team={this.props.champions}/> : ''}
+                    {displayChampions}
                 </div>
             </div>
         );

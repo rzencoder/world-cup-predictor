@@ -1,0 +1,29 @@
+@import 'variables';
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    div {
+        border: .2em solid #999;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        animation: 1s loader linear infinite;
+        position: relative;
+        width: 20px;
+        height: 20px;
+        font-size: 40px;
+        padding: 20px;
+    }
+}
+
+@keyframes loader {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

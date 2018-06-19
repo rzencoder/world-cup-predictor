@@ -39,7 +39,6 @@ class App extends Component {
     }
     this.toggleRound = this.toggleRound.bind(this);
     this.closeInfo = this.closeInfo.bind(this);
-    this.toggleCompetition = this.toggleCompetition.bind(this)
   }
 
   componentDidMount () {
@@ -50,10 +49,6 @@ class App extends Component {
     this.setState({
       knockout: !this.state.knockout
     });
-  }
-
-  toggleCompetition () {
-    this.props.fetchData(GAMES_API_R);
   }
 
   closeInfo = () => {
@@ -69,7 +64,11 @@ class App extends Component {
     }
 
     if (this.props.isLoading) {
-        return <p>Loading…</p>;
+        return (
+          <div className="loader">
+            <div></div>
+          </div>
+      );
     }
 
     const infoPanel = (
@@ -159,8 +158,8 @@ class App extends Component {
 
     return (
       <div className="app">
+        <a href="#" className="github-link"><i class="fab fa-github"></i></a>
         <h1 className="title">World Cup 2018 Russia</h1>
-        <button onClick={this.toggleCompetition}></button>
         {this.state.showInfo && infoPanel} 
         <div className="container">      
           <div className="round-selector">
