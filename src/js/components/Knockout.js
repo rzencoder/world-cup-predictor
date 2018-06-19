@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import PropTypes from 'prop-types';
+
+import Champions from './Champions.js';
+
+const mapStateToProps = state => {
+    return {
+        champions: state.champions
+    };
+};
 
 //Display which knockout round in the heading
 const roundConverter = length => {
@@ -18,6 +27,7 @@ class Knockout extends Component {
                 <h2>{roundConverter(this.props.data.length)}</h2> 
                 <div className={"knockout-round-container bracket-" + (this.props.round + 1)}>    
                     {this.props.data}
+                    {this.props.champions.name !== null && this.props.round === 3 ? <Champions team={this.props.champions}/> : ''}
                 </div>
             </div>
         );
@@ -26,7 +36,8 @@ class Knockout extends Component {
 
 Knockout.propTypes = {
     data: PropTypes.array.isRequired,
-    round: PropTypes.number.isRequired
+    round: PropTypes.number.isRequired,
+    champions: PropTypes.object.isRequired
 };
 
-export default Knockout;
+export default connect(mapStateToProps, null)(Knockout);

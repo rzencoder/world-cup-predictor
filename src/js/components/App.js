@@ -144,6 +144,8 @@ class App extends Component {
       const knockoutRounds = knockoutList.map((el,i) => {
         return <Knockout key={i} data={el} round={i} />
       })
+
+     
     
       knockoutContainer = (
         <div className="knockout-container">

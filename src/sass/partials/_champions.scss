@@ -1,0 +1,37 @@
+@import 'variables';
+
+.champions-container {
+    position: absolute;
+    background: #eee;
+    padding: 10px;
+    top: 30%;
+    left: 4%;
+    width: 85%;
+    min-height: 200px;
+    box-shadow: 0 0 8px 4px #999;
+    @media (max-width: 1000px) {
+        position: initial;
+        margin: 30px auto 15px;
+        width: 90%;
+        min-height: 150px;
+    }
+}
+
+.champions-data {
+    font-size: 26px;
+    text-align: center;
+    div {
+        margin: 10px;
+        padding: 5px 0;
+    }
+    i {
+        color: gold;
+        font-size: 50px;
+    }
+    .champions-team {
+        font-family: $title-font;
+        @media (max-width: 1000px) {
+            font-size: 30px;
+        }
+    }
+}

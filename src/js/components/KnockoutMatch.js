@@ -6,18 +6,21 @@ import FlagIcon from './FlagIcon.js';
 import codeConverter from '../data/flagCodes.js';
 import HoverInfo from './HoverInfo.js';
 import dateFormater from '../helpers/dateFormater.js';
-import { updateKnockout, removeTeam } from '../actions/index';
+import { updateKnockout, removeTeam, updateChampions, removeChampions } from '../actions/index';
 
 const mapStateToProps = state => {
   return {
-    knockouts: state.knockouts
+    knockouts: state.knockouts,
+    champions: state.champions
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     updateKnockout: (teams, index1, round, home) => dispatch(updateKnockout(teams, index1, round, home)),
-    removeTeam: (round, match, home) => dispatch(removeTeam(round, match, home))
+    removeTeam: (round, match, home) => dispatch(removeTeam(round, match, home)),
+    updateChampions: team => dispatch(updateChampions(team)),
+    removeChampions: team => dispatch(removeChampions(team))
   };
 };
 
@@ -50,7 +53,7 @@ class KnockoutMatch extends Component {
 
   calculateResult () {
     //TO DO FIX 64 bug
-    if (this.props.data.num !== 64) {
+   
       // Use actual score if match completed instead of prediction
       const homeScore = this.props.data.score1 ? this.props.data.score1 : this.state.homeScore;
       const awayScore = this.props.data.score2 ? this.props.data.score2 : this.state.awayScore;
@@ -60,17 +63,19 @@ class KnockoutMatch extends Component {
       const losingTeam = result >= 0 ? this.props.data.team2 : this.props.data.team1;
       const teams = [{name: team.name, code: team.code}];
 
-      let firstIndex;
-      // Find which match winner will play next
-      this.props.knockouts[this.props.round]['matches'].filter((el, i) => {
-        if (this.props.first === el.num) firstIndex = i;
-        return null;
-      });
+      if (this.props.data.num !== 64) {
+        let firstIndex;
+        // Find which match Champions will play next
+        this.props.knockouts[this.props.round]['matches'].filter((el, i) => {
+          if (this.props.first === el.num) firstIndex = i;
+          return null;
+        });
 
-      const home = 'team' + this.props.home;
-      this.checkFutureRounds(losingTeam);
-      this.props.updateKnockout(teams, firstIndex, this.props.round, home);
-      
+        const home = 'team' + this.props.home;
+        this.checkFutureRounds(losingTeam);
+        this.props.updateKnockout(teams, firstIndex, this.props.round, home);   
+    } else {
+        this.props.updateChampions(team);
     }
   }
 
@@ -110,13 +115,13 @@ class KnockoutMatch extends Component {
     const removeTeamArr = [];
 
     knockouts.forEach((round, i) => {
-      if(i > this.props.round) {
+      if(i >= this.props.round) {
         round.matches.forEach((match, j) => {
           if (losingTeam.name === match.team1.name) {
-            removeTeamArr.push({ round: i, match: j, home: 'team1' });
+            removeTeamArr.push({ name: losingTeam.name, round: i, match: j, home: 'team1' });
           }
           if (losingTeam.name === match.team2.name) {
-            removeTeamArr.push({ round: i, match: j, home: 'team2' });
+            removeTeamArr.push({ name: losingTeam.name, round: i, match: j, home: 'team2' });
           }
         });
       }
@@ -124,9 +129,15 @@ class KnockoutMatch extends Component {
 
     if (removeTeamArr.length) {
       removeTeamArr.forEach(el => {
+        
         this.props.removeTeam(el.round, el.match, el.home);
+        
+        if (el.name === this.props.champions.name) {
+          this.props.removeChampions(el);
+        }
       });
     }
+   
   }
 
   render() {
@@ -229,6 +240,9 @@ KnockoutMatch.propTypes = {
   round: PropTypes.number.isRequired,
   home: PropTypes.number.isRequired,
   removeTeam: PropTypes.func.isRequired,
+  champions: PropTypes.object.isRequired,
+  updateChampions: PropTypes.func.isRequired,
+  removeChampions: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(KnockoutMatch);

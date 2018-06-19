@@ -8,6 +8,7 @@
 @import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
 @import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
 @import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
+@import url("https://fonts.googleapis.com/css?family=Oxygen|Russo+One");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -298,6 +299,7 @@ table {
 
 .knockout-round-container {
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: space-around;
   height: 100%;
@@ -535,6 +537,37 @@ table {
   @media (min-width: 1000px) {
     .knockout-prediction {
       font-size: 18px; } }
+
+.champions-container {
+  position: absolute;
+  background: #eee;
+  padding: 10px;
+  top: 30%;
+  left: 4%;
+  width: 85%;
+  min-height: 200px;
+  box-shadow: 0 0 8px 4px #999; }
+  @media (max-width: 1000px) {
+    .champions-container {
+      position: initial;
+      margin: 30px auto 15px;
+      width: 90%;
+      min-height: 150px; } }
+
+.champions-data {
+  font-size: 26px;
+  text-align: center; }
+  .champions-data div {
+    margin: 10px;
+    padding: 5px 0; }
+  .champions-data i {
+    color: gold;
+    font-size: 50px; }
+  .champions-data .champions-team {
+    font-family: "Russo One", sans-serif; }
+    @media (max-width: 1000px) {
+      .champions-data .champions-team {
+        font-size: 30px; } }
 
 body {
   font-family: "Oxygen", arial, sans-serif;

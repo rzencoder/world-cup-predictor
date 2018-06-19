@@ -4,19 +4,21 @@ import PropTypes from 'prop-types';
 
 import FlagIcon from './FlagIcon.js';
 import codeConverter from '../data/flagCodes.js';
-import { updateQualifier, removeTeam } from '../actions/index';
+import { updateQualifier, removeTeam, removeChampions } from '../actions/index';
 
 const mapStateToProps = state => {
   return {
     groups: state.groups,
-    knockouts: state.knockouts
+    knockouts: state.knockouts,
+    champions: state.champions
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     updateQualifier: (teams, index1, index2, round) => dispatch(updateQualifier(teams, index1, index2, round)),
-    removeTeam: (round, match, home) => dispatch(removeTeam(round, match, home))
+    removeTeam: (round, match, home) => dispatch(removeTeam(round, match, home)),
+    removeChampions: (team) => dispatch(removeChampions(team))
   };
 };
 
@@ -129,10 +131,10 @@ class GroupTable extends Component {
       knockouts.forEach((round, i) => {
         round.matches.forEach((match, j) => {
           if (team.name === match.team1.name) {
-            removeTeamArr.push({ round: i + 1, match: j, home: 'team1' });
+            removeTeamArr.push({name: team.name, round: i + 1, match: j, home: 'team1' });
           }
           if (team.name === match.team2.name) {
-            removeTeamArr.push({ round: i + 1, match: j, home: 'team2' });
+            removeTeamArr.push({name: team.name, round: i + 1, match: j, home: 'team2' });
           }
         })
       })
@@ -140,6 +142,9 @@ class GroupTable extends Component {
     if (removeTeamArr.length) {
       removeTeamArr.forEach(el => {
         this.props.removeTeam(el.round, el.match, el.home);
+        if(el.name === this.props.champions.name) {
+          this.props.removeChampions(this.props.champions);
+        }
       });
     }
   }
@@ -166,7 +171,6 @@ class GroupTable extends Component {
   }
 
   render() {
-
     const teams = this.state.teams.map((el, i) => {
       return (
         <tr key={i}>
@@ -213,7 +217,9 @@ GroupTable.propTypes = {
   name: PropTypes.string.isRequired,
   updateQualifier: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
-  removeTeam: PropTypes.func.isRequired
+  removeTeam: PropTypes.func.isRequired,
+  removeChampions: PropTypes.func.isRequired,
+  champions: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupTable);
