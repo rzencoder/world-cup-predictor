@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 
-import Champions from './Champions.js';
+import Champions from '../components/Champions.js';
 
 const mapStateToProps = state => {
     return {

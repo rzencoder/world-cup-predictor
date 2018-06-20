@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 
-import FlagIcon from './FlagIcon.js';
-import codeConverter from '../data/flagCodes.js';
 import { updateQualifier, removeTeam, removeChampions } from '../actions/index';
+import GroupTableComponent from '../components/GroupTableComponent.js';
 
 const mapStateToProps = state => {
   return {
@@ -139,14 +138,14 @@ class GroupTable extends Component {
         })
       })
     })
-    if (removeTeamArr.length) {
-      removeTeamArr.forEach(el => {
-        this.props.removeTeam(el.round, el.match, el.home);
-        if(el.name === this.props.champions.name) {
-          this.props.removeChampions(this.props.champions);
-        }
-      });
-    }
+    // if (removeTeamArr.length) {
+    //   removeTeamArr.forEach(el => {
+    //     this.props.removeTeam(el.round, el.match, el.home);
+    //     if(el.name === this.props.champions.name) {
+    //       this.props.removeChampions(this.props.champions);
+    //     }
+    //   });
+    // }
   }
 
   calculateQualifiers (prevTable) {
@@ -162,8 +161,8 @@ class GroupTable extends Component {
     })
 
     const qualified =  [ 
-        { num: 49, name: teams[0]['name'], code: teams[0]['code'] },
-        { num: 49, name: teams[1]['name'], code: teams[1]['code'] }
+        { name: teams[0]['name'], code: teams[0]['code'] },
+        { name: teams[1]['name'], code: teams[1]['code'] }
       ];
 
     this.props.updateQualifier(qualified, firstIndex, secondIndex, 0);
@@ -171,39 +170,9 @@ class GroupTable extends Component {
   }
 
   render() {
-    const teams = this.state.teams.map((el, i) => {
-      return (
-        <tr key={i}>
-          <td><FlagIcon code={codeConverter(el.code)} size={'2x'} /></td>
-          <td>{el.name}</td>
-          <td>{el.won}</td>
-          <td>{el.drawn}</td>
-          <td>{el.lost}</td>
-          <td>{el.gd}</td>
-          <td>{el.pts}</td>
-        </tr>
-      )
-    });
-
     return (
       <div>
-        <h2 className="group-title">{this.props.name}</h2>
-        <table className="group-table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Team</th>
-              <th>W</th>
-              <th>D</th>
-              <th>L</th>
-              <th>GD</th>
-              <th>Pts</th>
-            </tr>
-          </thead>
-          <tbody>
-            {teams}
-          </tbody>
-        </table>
+        <GroupTableComponent teams={this.state.teams} name={this.props.name}/>
       </div>
     );
   }

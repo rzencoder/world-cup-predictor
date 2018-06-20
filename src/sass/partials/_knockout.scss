@@ -3,14 +3,25 @@
 .knockout-stage {
     text-align: center;
     width: 25%;
-    background: #e6ecef;
+    background: #ececec;
     padding-bottom: 50px;
+    border-left: 0.5px dashed #888;
     @media (max-width: 1000px) {
         width: 100%;
         background: initial;
+        padding-bottom: 10px;
+    }
+    &:nth-of-type(1) {
+        border-left: none;
+    }
+    &:nth-of-type(4) {
+        border-left: none;
+        @media (max-width: 1000px) {
+            padding-bottom: 50px;
+        }
     }
     &:nth-of-type(2n) {
-        background: #d7e9ef;
+        background: #f3f3f3;
         @media (max-width: 1000px) {
             background: initial;
         }
@@ -19,7 +30,7 @@
         font-size: 26px;
         font-family: $title-font;
         font-weight: 700;
-        padding: 10px;
+        padding: 20px 0 10px;
         @media (max-width: 1000px) {
             font-size: 32px;
         }

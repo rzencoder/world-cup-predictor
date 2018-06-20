@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 
-import dateFormater from '../helpers/dateFormater.js';
+import { GroupGameComponent } from '../components/GroupGameComponent';
 import { updateScore } from '../actions/index';
 
 const mapStateToProps = state => {
@@ -39,9 +39,6 @@ class GroupGames extends Component {
   }
 
   changeScore (name, value, home) {
-    // const opponentName = name === "homeScore" ? "awayScore" : "homeScore";
-    // const opponentScore = opponentName === "homeScore" ? this.state.awayScore : this.state.homeScore;
-    // const opponentValue = opponentScore === "" ? 0 : opponentScore;
     this.setState({
       [name]: value
     }, () => this.updateTable(value, home));
@@ -68,9 +65,7 @@ class GroupGames extends Component {
   }
   
   render() {
-
-    const data = this.props.groups[this.props.group]['matches'][this.props.index];
-
+    const data = this.props.data;
     //If goals scored display list of scorers
     let homeScorers = [];
     let awayScorers = [];
@@ -82,8 +77,6 @@ class GroupGames extends Component {
         return <div key={i}><i className="fas fa-futbol"></i> '{el.minute} {el.name}</div>
       });
     }   
-
-    const score = <span className="group-time">{data.score1} : {data.score2}</span>;
 
     const prediction = (
       <div className="prediction-container">
@@ -114,32 +107,19 @@ class GroupGames extends Component {
       </div>
     )
 
-    const displayScoreOrTime = data.confirmed  ? score : prediction;
-    const predictClass = data.confirmed ? "" : "predict";
-    
+    const score = <span className="group-time">{data.score1} : {data.score2}</span>;
+    const scoreOrPrediction = data.confirmed ? score : prediction;
+
     return (
-      <div className="group-match-container">    
-        <div>
-          <div className="group-date">{dateFormater(data.date)}</div>
-          <div className={"group-teams " + predictClass}>
-            <div className="group-team">
-              <div className="group-country-name">{data.team1.name}</div>
-              <div className="group-scorers">{homeScorers}</div>            
-            </div>
-            {displayScoreOrTime}
-            <div className="group-team">
-              <div className="group-country-name">{data.team2.name}</div>
-              <div className="group-scorers">{awayScorers}</div>        
-            </div>
-          </div>
-        </div>
-        <div>
-          <div className="group-stadium">{data.stadium ? data.stadium.name : '' }</div>
-          <div className="group-location">{data.city}</div>
-          <hr className="group-line"/>  
-        </div>
+      <div>
+        <GroupGameComponent 
+          data={data} 
+          scoreOrPrediction={scoreOrPrediction} 
+          homeScorers={homeScorers} 
+          awayScorers={awayScorers} />
       </div>
     );
+    
   }
 }
 

@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 
-import FlagIcon from './FlagIcon.js';
-import codeConverter from '../data/flagCodes.js';
-import HoverInfo from './HoverInfo.js';
-import dateFormater from '../helpers/dateFormater.js';
+import KnockoutGameComponent from '../components/KnockoutGameComponent.js';
 import { updateKnockout, removeTeam, updateChampions, removeChampions } from '../actions/index';
 
 const mapStateToProps = state => {
@@ -52,9 +49,9 @@ class KnockoutMatch extends Component {
   }
 
   calculateResult () {
-    //TO DO FIX 64 bug
-   
       // Use actual score if match completed instead of prediction
+      console.log(this.props.round)
+      if (this.props.round !== 4 && !this.props.knockouts[this.props.round  + 1]['matches'][0]['confirmed']) {
       const homeScore = this.props.data.score1 ? this.props.data.score1 : this.state.homeScore;
       const awayScore = this.props.data.score2 ? this.props.data.score2 : this.state.awayScore;
        // If result >= 0 home team won
@@ -73,10 +70,12 @@ class KnockoutMatch extends Component {
 
         const home = 'team' + this.props.home;
         this.checkFutureRounds(losingTeam);
+        console.log(teams)
         this.props.updateKnockout(teams, firstIndex, this.props.round, home);   
     } else {
         this.props.updateChampions(team);
     }
+  }
   }
 
   changeScoreClick (e) {
@@ -97,23 +96,9 @@ class KnockoutMatch extends Component {
     }, () => this.calculateResult());
   }
 
-  calculateScore (data, i) {
-    if (data['score' + i + 'et'] !== null) {
-      const extra = i === 1 ? 'AET ' : '';
-      if (data.score1et !== data.score2et) {
-        return extra + data['score' + i + 'et'];
-      } else {
-        return extra + data['score' + i + 'et'] + ' (' + data['score' + i] + ')';
-      }
-    }
-    return data['score' + i];
-  }
-
   checkFutureRounds (losingTeam) {
-
     const knockouts = [...this.props.knockouts];
     const removeTeamArr = [];
-
     knockouts.forEach((round, i) => {
       if(i >= this.props.round) {
         round.matches.forEach((match, j) => {
@@ -128,10 +113,8 @@ class KnockoutMatch extends Component {
     });
 
     if (removeTeamArr.length) {
-      removeTeamArr.forEach(el => {
-        
-        this.props.removeTeam(el.round, el.match, el.home);
-        
+      removeTeamArr.forEach(el => {      
+        this.props.removeTeam(el.round, el.match, el.home);       
         if (el.name === this.props.champions.name) {
           this.props.removeChampions(el);
         }
@@ -141,92 +124,17 @@ class KnockoutMatch extends Component {
   }
 
   render() {
-    //Render Goalscorer list
-    let awayScorers = [];
-    let homeScorers = [];     
-    if (this.props.data.goals1) {
-      homeScorers = this.props.data.goals1.map((el, i) => {
-        return <div key={i}><i className="fas fa-futbol"></i> '{el.minute} {el.name}</div>
-      });
-      awayScorers = this.props.data.goals2.map((el, i) => {
-        return <div key={i}><i className="fas fa-futbol"></i> '{el.minute} {el.name}</div>
-      });
-    }
-    
-    const homePrediction = (
-      <div id="home" className="knockout-prediction">
-        <div onClick={this.changeScoreClick} className="down">-</div>
-        <div>
-          <input name="homeScore"
-              type="number"
-              ref={this.score1Input}
-              value={this.state.homeScore}
-              onChange={this.handleInputChange} 
-              min="0"/>
-        </div>
-        <div onClick={this.changeScoreClick} className="up">+</div>
-      </div>
-    );
-
-    const awayPrediction = (
-      <div id="away" className="knockout-prediction">
-        <div onClick={this.changeScoreClick} className="down">-</div>
-        <div>
-          <input name="awayScore"
-              type="number"
-              ref={this.score2Input}
-              value={this.state.awayScore}
-              onChange={this.handleInputChange} 
-              min="0"/>
-        </div>
-        <div onClick={this.changeScoreClick} className="up">+</div>
-      </div>
-    );
-
     return (
-      <div className = "knockout-match bracket-team" >
-        <div className="knockout-date">{dateFormater(this.props.data.date)}</div>
-        <div className="knockout-teams">
-          <div className="knockout-team">
-            <div>
-              {this.props.data.team1.name === null ? "" : <FlagIcon code={codeConverter(this.props.data.team1.code)} size={'2x'} />}
-              <div className="knockout-country-name">
-                <div>
-                {this.props.data.team1.name !== null ? this.props.data.team1.name : this.props.data.team1.position}
-                </div>
-                {homeScorers.length ? <HoverInfo data={homeScorers} /> : ''}
-              </div>   
-              <div className="knockout-score">
-                {this.props.data.score1 === null ? '' : <span>{this.calculateScore(this.props.data, 1)}</span>}
-                {this.props.data.score1 === null && this.props.data.team1.name !== null 
-                   && this.props.data.team2.name !== null ? homePrediction : '' }
-              </div>
-            </div>
-            <div className="knockout-scorers">
-              {homeScorers}
-            </div>     
-          </div>
-          
-          <div className="knockout-team">
-            <div>
-              {this.props.data.team2.name === null ? "" : <FlagIcon code={codeConverter(this.props.data.team2.code)} size={'2x'} />}
-              <div className="knockout-country-name">
-              {this.props.data.team2.name !== null ? this.props.data.team2.name : this.props.data.team2.position}
-              </div>
-              {awayScorers.length ? <HoverInfo data={awayScorers}/> : ''}
-              <div className="knockout-score">
-                {this.props.data.score2 === null ? '' : <span>{this.calculateScore(this.props.data, 2)}</span>}
-                {this.props.data.score2 === null && this.props.data.team1.name !== null 
-                   && this.props.data.team2.name !== null ? awayPrediction : '' }
-              </div>
-             </div>
-             <div className="knockout-scorers">
-              {awayScorers}
-            </div>        
-          </div>
-        </div>
-        <div className="knockout-stadium">{this.props.data.stadium ? this.props.data.stadium.name : '' }</div>
-        <div className="knockout-location">{this.props.data.city}</div>
+      <div className = "knockout-match bracket-team">
+        <KnockoutGameComponent 
+          data={this.props.data}
+          changeScoreClick={this.changeScoreClick}
+          handleInputChange={this.handleInputChange}
+          score1Input={this.score1Input}
+          score2Input={this.score2Input}
+          homeScore={this.state.homeScore}
+          awayScore={this.state.awayScore}
+        />
       </div>
     );
   }

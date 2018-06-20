@@ -5,8 +5,13 @@
     font-size: 50px;
     font-weight: 700;
     padding: 20px;
-    margin-top: 10px;
     text-align: center;   
+    background: #ccc;
+    color: white;
+    box-shadow: 0 6px 0 0 white,
+    0 12px 0 0 #4949ff,
+    0 18px 0 0 #f63333;
+    text-shadow: 3px 3px 3px #333;
 }
 
 .github-link {
@@ -14,7 +19,7 @@
     padding: 5px;
     margin: 5px 10px;
     font-size: 36px;
-    color: #555;
+    color: #666;
     right: 0;
     cursor: pointer;
     &:hover {
@@ -44,6 +49,7 @@
     background: #0e4ce0;
     color: white;
     position: relative;
+    text-shadow: 0.5px 0.5px 1px #333;
     &::after {
         content: '';
         position: absolute;
@@ -59,7 +65,7 @@
 
 .links {
     background: #ddd;
-    font-family: $title-font;
+    
     padding: 10px;
     width: 50%;
     margin: 15px auto;
@@ -71,9 +77,11 @@
     }
     .link-container {
         display: flex;
+        font-family: $title-font;
+        padding: 5px;
         flex-wrap: wrap;
         justify-content: center;
-        width: 60%;
+        width: 70%;
         margin: 0 auto;
         @media (max-width: 800px) {
             width: 90%;
@@ -92,9 +100,9 @@
     width: 50%;
     position: relative;
     background: rgb(183, 213, 223);
-    margin: 15px auto 5px;
+    margin: 30px auto 15px;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     border-radius: 3px;
     font-size: 17px;
     overflow: hidden;
@@ -103,8 +111,8 @@
     }
     i {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 2px;
+        right: 5px;
         padding: 5px;
         cursor: pointer;
         &:hover {

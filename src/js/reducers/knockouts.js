@@ -27,6 +27,7 @@ export function knockouts (state = [], action) {
       })
 
       case UPDATE_KNOCKOUT:
+      
         return update(state, {   
             [action.round]: {
                 matches: {
@@ -41,6 +42,7 @@ export function knockouts (state = [], action) {
         })
     
     case REMOVE_TEAM:
+    
         return update(state, {
           [action.round]: {
             matches: {

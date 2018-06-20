@@ -58,15 +58,18 @@ table {
   font-size: 50px;
   font-weight: 700;
   padding: 20px;
-  margin-top: 10px;
-  text-align: center; }
+  text-align: center;
+  background: #ccc;
+  color: white;
+  box-shadow: 0 6px 0 0 white, 0 12px 0 0 #4949ff, 0 18px 0 0 #f63333;
+  text-shadow: 3px 3px 3px #333; }
 
 .github-link {
   position: absolute;
   padding: 5px;
   margin: 5px 10px;
   font-size: 36px;
-  color: #555;
+  color: #666;
   right: 0;
   cursor: pointer; }
   .github-link:hover {
@@ -91,7 +94,8 @@ table {
 .toggle {
   background: #0e4ce0;
   color: white;
-  position: relative; }
+  position: relative;
+  text-shadow: 0.5px 0.5px 1px #333; }
   .toggle::after {
     content: '';
     position: absolute;
@@ -105,7 +109,6 @@ table {
 
 .links {
   background: #ddd;
-  font-family: "Russo One", sans-serif;
   padding: 10px;
   width: 50%;
   margin: 15px auto;
@@ -117,9 +120,11 @@ table {
       width: 80%; } }
   .links .link-container {
     display: flex;
+    font-family: "Russo One", sans-serif;
+    padding: 5px;
     flex-wrap: wrap;
     justify-content: center;
-    width: 60%;
+    width: 70%;
     margin: 0 auto; }
     @media (max-width: 800px) {
       .links .link-container {
@@ -135,9 +140,9 @@ table {
   width: 50%;
   position: relative;
   background: #b7d5df;
-  margin: 15px auto 5px;
+  margin: 30px auto 15px;
   text-align: center;
-  padding: 10px;
+  padding: 15px;
   border-radius: 3px;
   font-size: 17px;
   overflow: hidden; }
@@ -146,8 +151,8 @@ table {
       width: 80%; } }
   .info-panel i {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 2px;
+    right: 5px;
     padding: 5px;
     cursor: pointer; }
     .info-panel i:hover {
@@ -275,14 +280,23 @@ table {
 .knockout-stage {
   text-align: center;
   width: 25%;
-  background: #e6ecef;
-  padding-bottom: 50px; }
+  background: #ececec;
+  padding-bottom: 50px;
+  border-left: 0.5px dashed #888; }
   @media (max-width: 1000px) {
     .knockout-stage {
       width: 100%;
-      background: initial; } }
+      background: initial;
+      padding-bottom: 10px; } }
+  .knockout-stage:nth-of-type(1) {
+    border-left: none; }
+  .knockout-stage:nth-of-type(4) {
+    border-left: none; }
+    @media (max-width: 1000px) {
+      .knockout-stage:nth-of-type(4) {
+        padding-bottom: 50px; } }
   .knockout-stage:nth-of-type(2n) {
-    background: #d7e9ef; }
+    background: #f3f3f3; }
     @media (max-width: 1000px) {
       .knockout-stage:nth-of-type(2n) {
         background: initial; } }
@@ -290,7 +304,7 @@ table {
     font-size: 26px;
     font-family: "Russo One", sans-serif;
     font-weight: 700;
-    padding: 10px; }
+    padding: 20px 0 10px; }
     @media (max-width: 1000px) {
       .knockout-stage h2 {
         font-size: 32px; } }
