@@ -1,22 +1,28 @@
-import React, { Component } from 'react';
-import FlagIcon from './FlagIcon.js';
-import codeConverter from '../data/flagCodes.js';
+import React from 'react';
+import PropTypes from 'prop-types';
 import sizeMe from 'react-sizeme';
 import Confetti from 'react-confetti';
 
-class Champions extends Component {
-    render () { 
-        return (
-            <div className="champions-container"> 
-                <div className="champions-data">
-                    <Confetti {...this.props.size} numberOfPieces={50} />
-                    <div><i className="fas fa-trophy"></i></div>
-                    <div className="champions-flag"><FlagIcon code={codeConverter(this.props.team.code)} size={'2x'} /></div>
-                    <div className="champions-team">{this.props.team.name}</div>
-                </div>
-            </div>
-        );
-    }
-}
+import FlagIcon from './FlagIcon';
+import codeConverter from '../data/flagCodes';
 
-export default sizeMe({ monitorWidth: true, monitorHeight: true })(Champions)
+
+const Champions = props => (
+  <div className="champions-container">
+    <div className="champions-data">
+      <Confetti {...props.size} numberOfPieces={50} />
+      <div><i className="fas fa-trophy" /></div>
+      <div className="champions-flag">
+        <FlagIcon code={codeConverter(props.team.code)} size="2x" />
+      </div>
+      <div className="champions-team">{props.team.name}</div>
+    </div>
+  </div>
+);
+
+Champions.propTypes = {
+  size: PropTypes.array.isRequired,
+  team: PropTypes.object.isRequired,
+};
+
+export default sizeMe({ monitorWidth: true, monitorHeight: true })(Champions);

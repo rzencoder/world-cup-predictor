@@ -1,6 +1,6 @@
 import { UPDATE_CHAMPIONS, REMOVE_CHAMPIONS } from '../constants/action-types';
 
-export function champions(state = {name: null, code: null}, action) {
+function champions(state = { name: null, code: null }, action) {
   switch (action.type) {
     case UPDATE_CHAMPIONS:
       return action.team;
@@ -12,3 +12,5 @@ export function champions(state = {name: null, code: null}, action) {
       return state;
   }
 }
+
+export default champions;

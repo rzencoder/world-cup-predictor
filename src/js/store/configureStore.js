@@ -3,12 +3,12 @@ import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 
 export default function configureStore(initialState) {
-    return createStore(
-        rootReducer,
-        initialState,
-        compose(
-            applyMiddleware(thunk),
-            window.devToolsExtension ? window.devToolsExtension() : f => f
-        )
-    );
+  return createStore(
+    rootReducer,
+    initialState,
+    compose(
+      applyMiddleware(thunk),
+      window.devToolsExtension ? window.devToolsExtension() : f => f,
+    ),
+  );
 }

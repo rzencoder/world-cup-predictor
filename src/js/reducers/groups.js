@@ -28,13 +28,13 @@ export function groups(state = [], action) {
 
     case UPDATE_SCORE:
       return update(state, {
-          [action.group]: {
+        [action.group]: {
           matches: {
             [action.index]: {
-              ['score' + action.home]: { $set: action.score }
-            }
-          }
-        }
+              ['score' + action.home]: { $set: action.score },
+            },
+          },
+        },
       });
 
     default:
