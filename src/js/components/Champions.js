@@ -6,7 +6,6 @@ import Confetti from 'react-confetti';
 import FlagIcon from './FlagIcon';
 import codeConverter from '../data/flagCodes';
 
-
 const Champions = props => (
   <div className="champions-container">
     <div className="champions-data">
@@ -21,7 +20,7 @@ const Champions = props => (
 );
 
 Champions.propTypes = {
-  size: PropTypes.array.isRequired,
+  size: PropTypes.object.isRequired,
   team: PropTypes.object.isRequired,
 };
 

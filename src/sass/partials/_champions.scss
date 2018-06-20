@@ -1,12 +1,10 @@
 @import 'variables';
 
 .champions-container {
-    position: absolute;
     background: #eee;
     padding: 10px;
-    top: 30%;
-    left: 4%;
     width: 85%;
+    margin-left: 10px;
     min-height: 200px;
     box-shadow: 0 0 8px 4px #999;
     @media (max-width: 1000px) {

@@ -103,23 +103,17 @@ class GroupTable extends Component {
     const sortedTeams = teams.sort((a, b) => a.gd < b.gd)
       .sort((a, b) => a.pts < b.pts);
 
-    // const prevTable = [...this.state.teams];
     this.setState({
       teams: sortedTeams,
     }, () => this.calculateQualifiers());
   }
 
   checkFutureGames() {
+    /* Remove all teams from knockouts after changing group to prevent bugs where
+    teams not qualified from the group are still in the knockouts */
     const teams = [...this.state.teams];
+    // Slice to just get last 16 round
     const knockouts = [...this.props.knockouts].slice(1);
-
-    // const currentTeams = teams.map(el => el.name);
-    // const prevTeams = prevTable.splice(0, 2).map(el => el.name);
-    // const topTwoChanged = prevTeams[0] !== currentTeams[0];
-
-
-    // console.log(currentTeams);
-    // console.log(prevTeams);
     const removeTeamArr = [];
     teams.forEach((team) => {
       knockouts.forEach((round, i) => {
@@ -137,14 +131,18 @@ class GroupTable extends Component {
         });
       });
     });
-    // if (removeTeamArr.length) {
-    //   removeTeamArr.forEach(el => {
-    //     this.props.removeTeam(el.round, el.match, el.home);
-    //     if(el.name === this.props.champions.name) {
-    //       this.props.removeChampions(this.props.champions);
-    //     }
-    //   });
-    // }
+
+    // Removing teams from the knockout founds if result only predicted
+    if (removeTeamArr.length) {
+      removeTeamArr.forEach((el) => {
+        if (!this.props.knockouts[el.round].matches[el.match].confirmed) {
+          this.props.removeTeam(el.round, el.match, el.home);
+        }
+        if (el.name === this.props.champions.name) {
+          this.props.removeChampions(this.props.champions);
+        }
+      });
+    }
   }
 
   calculateQualifiers(prevTable) {
@@ -184,6 +182,9 @@ GroupTable.propTypes = {
   name: PropTypes.string.isRequired,
   updateQualifier: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
+  removeTeam: PropTypes.func.isRequired,
+  champions: PropTypes.object.isRequired,
+  removeChampions: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupTable);

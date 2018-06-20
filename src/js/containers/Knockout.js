@@ -28,8 +28,8 @@ const Knockout = (props) => {
     <div className="knockout-stage">
       <h2>{roundConverter(props.data.length)}</h2>
       <div className={'knockout-round-container bracket-' + (props.round + 1)}>
-        {props.data}
         {displayChampions}
+        {props.data}
       </div>
     </div>
   );

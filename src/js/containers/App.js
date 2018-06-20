@@ -32,10 +32,16 @@ class App extends Component {
     };
     this.toggleRound = this.toggleRound.bind(this);
     this.closeInfo = this.closeInfo.bind(this);
+    this.keyDownCloseInfo = this.keyDownCloseInfo.bind(this);
+    this.keyDownToggle = this.keyDownToggle.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchData(GAMES_API);
+  }
+
+  keyDownToggle(e) {
+    if (e.keyCode === 13) this.toggleRound(e);
   }
 
   toggleRound(e) {
@@ -43,6 +49,10 @@ class App extends Component {
     this.setState({
       knockout: toggle,
     });
+  }
+
+  keyDownCloseInfo(e) {
+    if (e.keyCode === 13) this.closeInfo();
   }
 
   closeInfo() {
@@ -58,9 +68,11 @@ class App extends Component {
       return <a key={el.name} href={'#group-' + letter}>{letter.toUpperCase()}</a>;
     });
 
+    // Map groups games to component
     const groups = this.props.groups.map((el, i) => {
       const games = el.matches
         .map((data, j) => <GroupGames data={data} key={data.num} group={i} index={j} />);
+      // Find which match the groups winners and runners up will play in the 'Last 16'
       let first;
       let second;
       advance[0].matches.filter((a) => {
@@ -105,20 +117,19 @@ class App extends Component {
 
   renderKnockouts() {
     const knockoutGames = this.props.knockouts;
-    let knockoutList;
-    if (knockoutGames.length > 1) {
-      knockoutList = knockoutGames.map((round, i) => round.matches.map((el, j) => {
-        const first = advance[i + 1].matches[j].num;
-        const home = advance[i + 1].matches[j].index;
-        return (<KnockoutMatch
-          key={el.num}
-          round={i + 1}
-          first={first}
-          home={home + 1}
-          data={knockoutGames[i].matches[j]}
-        />);
-      }));
-    }
+    // Map the game the winner of each match will play in the first variable
+    const knockoutList = knockoutGames.map((round, i) => round.matches.map((el, j) => {
+      const first = advance[i + 1].matches[j].num;
+      // Map if the winner will be the home or away team in next match
+      const home = advance[i + 1].matches[j].index;
+      return (<KnockoutMatch
+        key={el.num}
+        round={i + 1}
+        first={first}
+        home={home + 1}
+        data={knockoutGames[i].matches[j]}
+      />);
+    }));
 
     const knockoutRounds = knockoutList.map((el, i) => {
       const key = 'round' + i;
@@ -153,6 +164,8 @@ class App extends Component {
           closeInfo={this.closeInfo}
           knockout={this.state.knockout}
           toggleRound={this.toggleRound}
+          keyDownToggle={this.keyDownToggle}
+          keyDownCloseInfo={this.keyDownCloseInfo}
         />
         <div className="container">
           { displayStage }

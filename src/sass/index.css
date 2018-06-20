@@ -331,6 +331,8 @@ table {
   height: 100%;
   width: 90%;
   margin: 0 auto; }
+  .knockout-round-container:nth-of-type(4) {
+    justify-content: center; }
   @media (max-width: 1000px) {
     .knockout-round-container {
       height: auto;
@@ -486,8 +488,10 @@ table {
   height: 350%;
   top: -300%; }
 
-.bracket-4 .bracket-team:after {
-  display: none; }
+.bracket-4 {
+  justify-content: center; }
+  .bracket-4 .bracket-team:after {
+    display: none; }
 
 .prediction-container {
   display: flex;
@@ -565,12 +569,10 @@ table {
       font-size: 18px; } }
 
 .champions-container {
-  position: absolute;
   background: #eee;
   padding: 10px;
-  top: 30%;
-  left: 4%;
   width: 85%;
+  margin-left: 10px;
   min-height: 200px;
   box-shadow: 0 0 8px 4px #999; }
   @media (max-width: 1000px) {

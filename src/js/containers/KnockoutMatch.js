@@ -41,8 +41,9 @@ class KnockoutMatch extends Component {
   }
 
   handleInputChange(e) {
+    const value = parseInt(e.target.value, 10);
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: value,
     }, () => this.calculateResult());
   }
 
@@ -58,30 +59,27 @@ class KnockoutMatch extends Component {
 
   calculateResult() {
     // Use actual score if match completed instead of prediction
-    if (this.props.round !== 4 &&
-      !this.props.knockouts[this.props.round + 1].matches[0].confirmed) {
-      const homeScore = this.props.data.score1 ? this.props.data.score1 : this.state.homeScore;
-      const awayScore = this.props.data.score2 ? this.props.data.score2 : this.state.awayScore;
-      // If result >= 0 home team won
-      const result = homeScore - awayScore;
-      const team = result >= 0 ? this.props.data.team1 : this.props.data.team2;
-      const losingTeam = result >= 0 ? this.props.data.team2 : this.props.data.team1;
-      const teams = [{ name: team.name, code: team.code }];
+    const homeScore = this.props.data.score1 ? this.props.data.score1 : this.state.homeScore;
+    const awayScore = this.props.data.score2 ? this.props.data.score2 : this.state.awayScore;
+    // If result >= 0 home team won
+    const result = homeScore - awayScore;
+    const team = result >= 0 ? this.props.data.team1 : this.props.data.team2;
+    const losingTeam = result >= 0 ? this.props.data.team2 : this.props.data.team1;
+    const teams = [{ name: team.name, code: team.code }];
 
-      if (this.props.data.num !== 64) {
-        let firstIndex;
-        // Find which match Champions will play next
-        this.props.knockouts[this.props.round].matches.filter((el, i) => {
-          if (this.props.first === el.num) firstIndex = i;
-          return null;
-        });
+    if (this.props.data.num !== 64) {
+      let firstIndex;
+      // Find which match winner will play next
+      this.props.knockouts[this.props.round].matches.filter((el, i) => {
+        if (this.props.first === el.num) firstIndex = i;
+        return null;
+      });
 
-        const home = 'team' + this.props.home;
-        this.checkFutureRounds(losingTeam);
-        this.props.updateKnockout(teams, firstIndex, this.props.round, home);
-      } else {
-        this.props.updateChampions(team);
-      }
+      const home = 'team' + this.props.home;
+      this.checkFutureRounds(losingTeam);
+      this.props.updateKnockout(teams, firstIndex, this.props.round, home);
+    } else {
+      this.props.updateChampions(team);
     }
   }
 
@@ -104,6 +102,7 @@ class KnockoutMatch extends Component {
   }
 
   checkFutureRounds(losingTeam) {
+    // Checking if the losing team was present in future rounds
     const knockouts = [...this.props.knockouts];
     const removeTeamArr = [];
     knockouts.forEach((round, i) => {
@@ -122,7 +121,7 @@ class KnockoutMatch extends Component {
         });
       }
     });
-
+    /* Remove teams if they are still in future rounds but user has changed previous results */
     if (removeTeamArr.length) {
       removeTeamArr.forEach((el) => {
         this.props.removeTeam(el.round, el.match, el.home);

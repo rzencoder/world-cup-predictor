@@ -4,7 +4,13 @@ import PropTypes from 'prop-types';
 const Header = (props) => {
   const infoPanel = (
     <div className="info-panel">
-      <i onClick={props.closeInfo} role="button" tabIndex={0} className="fas fa-times" />
+      <i
+        onClick={props.closeInfo}
+        onKeyDown={props.keyDownCloseInfo}
+        role="button"
+        tabIndex={0}
+        className="fas fa-times"
+      />
       <p>API updated daily <a href="https://github.com/openfootball/world-cup.json">https://github.com/openfootball/world-cup.json</a></p>
       <p>All Kickoff Times (UTC +00:00)</p>
     </div>
@@ -25,6 +31,7 @@ const Header = (props) => {
             tabIndex={0}
             className={props.knockout ? '' : 'toggle'}
             onClick={props.toggleRound}
+            onKeyDown={props.keyDownToggle}
           >Groups
           </div>
           <div
@@ -33,6 +40,7 @@ const Header = (props) => {
             tabIndex={0}
             className={props.knockout ? 'toggle' : ''}
             onClick={props.toggleRound}
+            onKeyDown={props.keyDownToggle}
           >Knockouts
           </div>
         </div>
@@ -46,6 +54,8 @@ Header.propTypes = {
   closeInfo: PropTypes.func.isRequired,
   showInfo: PropTypes.bool.isRequired,
   toggleRound: PropTypes.func.isRequired,
+  keyDownToggle: PropTypes.func.isRequired,
+  keyDownCloseInfo: PropTypes.func.isRequired,
 };
 
 export default Header;

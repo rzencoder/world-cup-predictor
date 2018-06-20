@@ -42,6 +42,7 @@
     flex-direction: row;
     padding: 20px;
     justify-content: space-around;
+    
     @media (max-width: 1000px) {
         flex-direction: column;
         width: 70%;
@@ -60,6 +61,9 @@
     height: 100%;
     width: 90%;
     margin: 0 auto;
+    &:nth-of-type(4) {
+        justify-content: center;
+    }
     @media (max-width: 1000px) {
         height: auto;
         width: auto;
