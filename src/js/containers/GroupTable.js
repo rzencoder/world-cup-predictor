@@ -49,6 +49,8 @@ class GroupTable extends Component {
         won: 0,
         drawn: 0,
         lost: 0,
+        gf: 0,
+        ga: 0,
         gd: 0,
         pts: 0,
       })).filter((el) => {
@@ -75,6 +77,10 @@ class GroupTable extends Component {
         if (team.name === match.team2.name) awayTeam = team;
       });
       const result = match.score1 - match.score2;
+      homeTeam.gf = match.score1;
+      homeTeam.ga = match.score2;
+      awayTeam.gf = match.score2;
+      awayTeam.ga = match.score1;
       // Logic for updating table stats
       if (match.score1 === null) {
         return null;
@@ -99,8 +105,9 @@ class GroupTable extends Component {
       return null;
     });
 
-    // Sort table by points and goal difference
-    const sortedTeams = teams.sort((a, b) => a.gd < b.gd)
+    // Sort table by points and goal difference and goals scored
+    const sortedTeams = teams.sort((a, b) => a.gf < b.gf)
+      .sort((a, b) => a.gd < b.gd)
       .sort((a, b) => a.pts < b.pts);
 
     this.setState({
