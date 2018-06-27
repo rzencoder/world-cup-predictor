@@ -81,6 +81,9 @@ class GroupTable extends Component {
       homeTeam.ga = match.score2;
       awayTeam.gf = match.score2;
       awayTeam.ga = match.score1;
+      /* Had to add this temp edge case as Belgium and England have identical records
+       and are only separated by their fairplay score which the api does not collect data on */
+      if (homeTeam.name === 'England') homeTeam.gf += 1;
       // Logic for updating table stats
       if (match.score1 === null) {
         return null;
