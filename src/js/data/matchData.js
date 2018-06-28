@@ -145,36 +145,6 @@ export const tempMatches = [{
     city: 'Samara',
     timezone: 'UTC+3',
   },
-
-  {
-    num: 55,
-    date: '2018-07-03',
-    time: '15:00',
-    team1: {
-      name: null,
-      code: null,
-      position: 'F1',
-    },
-    team2: {
-      name: null,
-      code: null,
-      position: 'E2',
-    },
-    score1: null,
-    score2: null,
-    score1i: null,
-    score2i: null,
-    score1et: null,
-    score2et: null,
-    score1p: null,
-    score2p: null,
-    stadium: {
-      key: '',
-      name: 'Krestovsky Stadium',
-    },
-    city: 'Saint Petersburg',
-    timezone: 'UTC+3',
-  },
   {
     num: 54,
     date: '2018-07-02',
@@ -204,6 +174,36 @@ export const tempMatches = [{
     city: 'Rostov-on-Don',
     timezone: 'UTC+3',
   },
+  {
+    num: 55,
+    date: '2018-07-03',
+    time: '15:00',
+    team1: {
+      name: null,
+      code: null,
+      position: 'F1',
+    },
+    team2: {
+      name: null,
+      code: null,
+      position: 'E2',
+    },
+    score1: null,
+    score2: null,
+    score1i: null,
+    score2i: null,
+    score1et: null,
+    score2et: null,
+    score1p: null,
+    score2p: null,
+    stadium: {
+      key: '',
+      name: 'Krestovsky Stadium',
+    },
+    city: 'Saint Petersburg',
+    timezone: 'UTC+3',
+  },
+
   {
     num: 56,
     date: '2018-07-03',
