@@ -5,7 +5,7 @@ if match fixture has not been played yet */
 const processInitialState = (data) => {
   // Separate groups from knockout games
   const groupGames = data.rounds.slice(0, 15);
-  let knockoutGames = data.rounds.slice(15, 18);
+  const knockoutGames = data.rounds.slice(15, 18);
   knockoutGames.push(data.rounds[19]);
 
   const groupNames = ['Group A', 'Group B', 'Group C', 'Group D', 'Group E', 'Group F', 'Group G', 'Group H'];
@@ -25,22 +25,39 @@ const processInitialState = (data) => {
     return { name, matches: sortedGames };
   });
 
-  if (knockoutGames[0].matches.length) {
-    knockoutGames.forEach((round) => {
-      round.matches.forEach((match) => {
-        if (match.score1 !== null) {
-          match.confirmed = true;
-        } else {
-          match.confirmed = false;
+  const knockoutMatches = tempMatches.map((round, i) => {
+    const roundMap = round.matches.map((match, j) => {
+      if (knockoutGames[i].matches.length) {
+        if (knockoutGames[i].matches[j]) {
+          if (knockoutGames[i].matches[j].score1 !== null) {
+            knockoutGames[i].matches[j].confirmed = true;
+          } else {
+            knockoutGames[i].matches[j].confirmed = false;
+          }
+          return knockoutGames[i].matches[j];
         }
-      });
+      }
+      return match;
     });
-  }
+    return { name: round.name, matches: roundMap };
+  });
+
+  // if (knockoutGames[0].matches.length) {
+  //   knockoutGames.forEach((round) => {
+  //     round.matches.forEach((match) => {
+  //       if (match.score1 !== null) {
+  //         match.confirmed = true;
+  //       } else {
+  //         match.confirmed = false;
+  //       }
+  //     });
+  //   });
+  // }
 
   // if no knockout games played replace api data with temp match data
-  if (!knockoutGames[0].matches.length) {
-    knockoutGames = tempMatches;
-  }
+  // if (!knockoutGames[0].matches.length) {
+  //   knockoutGames = tempMatches;
+  // }
 
   // Swap over 'Round of 16' matches so correct teams will meet in the next round
   function swapElement(array, indexA, indexB) {
@@ -48,9 +65,12 @@ const processInitialState = (data) => {
     array[indexA] = array[indexB];
     array[indexB] = temp;
   }
-  swapElement(knockoutGames[0].matches, 2, 4);
-  swapElement(knockoutGames[0].matches, 3, 5);
-  return { groupGames: groups, knockoutGames };
+
+  swapElement(knockoutMatches[0].matches, 5, 6);
+  return {
+    groupGames: groups,
+    knockoutGames: knockoutMatches,
+  };
 };
 
 export default processInitialState;
