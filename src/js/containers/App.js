@@ -27,7 +27,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      knockout: false,
+      knockout: true,
       showInfo: true,
     };
     this.toggleRound = this.toggleRound.bind(this);
