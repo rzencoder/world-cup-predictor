@@ -35,7 +35,7 @@ class KnockoutMatch extends Component {
 
   componentDidMount() {
     // If a match has an actual result then calculate which team progressed
-    if (this.props.data.score1 && this.props.data.score2) {
+    if (this.props.data.score1 || this.props.data.score2) {
       this.calculateResult();
     }
   }
