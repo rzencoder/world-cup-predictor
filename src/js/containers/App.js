@@ -8,9 +8,9 @@ import Knockout from './Knockout';
 import KnockoutMatch from './KnockoutMatch';
 import Header from '../components/Header';
 
-import { fetchData } from '../actions/index';
+import { fetchData, fetchPredictor } from '../actions/index';
 import { advance } from '../data/matchData';
-import { GAMES_API } from '../constants/api';
+import { API2014, API2018 } from '../constants/api';
 
 const mapStateToProps = state => ({
   groups: state.groups,
@@ -21,23 +21,27 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchData: url => dispatch(fetchData(url)),
+  fetchPredictor: url => dispatch(fetchPredictor(url)),
 });
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      knockout: true,
+      knockout: false,
       showInfo: true,
+      year: '2018 Predictor',
     };
     this.toggleRound = this.toggleRound.bind(this);
+    this.handleYearChange = this.handleYearChange.bind(this);
+    this.handleYearSubmit = this.handleYearSubmit.bind(this);
     this.closeInfo = this.closeInfo.bind(this);
     this.keyDownCloseInfo = this.keyDownCloseInfo.bind(this);
     this.keyDownToggle = this.keyDownToggle.bind(this);
   }
 
   componentDidMount() {
-    this.props.fetchData(GAMES_API);
+    this.props.fetchPredictor(API2018);
   }
 
   keyDownToggle(e) {
@@ -49,6 +53,21 @@ class App extends Component {
     this.setState({
       knockout: toggle,
     });
+  }
+
+  handleYearChange(e) {
+    this.setState({ year: e.target.value });
+  }
+
+  handleYearSubmit(e) {
+    e.preventDefault();
+    if (this.state.year === '2014 Results') {
+      this.props.fetchData(API2014);
+    } else if (this.state.year === '2018 Results') {
+      this.props.fetchData(API2018);
+    } else if (this.state.year === '2018 Predictor') {
+      this.props.fetchPredictor(API2018);
+    }
   }
 
   keyDownCloseInfo(e) {
@@ -164,6 +183,9 @@ class App extends Component {
           closeInfo={this.closeInfo}
           knockout={this.state.knockout}
           toggleRound={this.toggleRound}
+          handleYearChange={this.handleYearChange}
+          handleYearSubmit={this.handleYearSubmit}
+          year={this.state.year}
           keyDownToggle={this.keyDownToggle}
           keyDownCloseInfo={this.keyDownCloseInfo}
         />
@@ -181,6 +203,7 @@ App.propTypes = {
   groups: PropTypes.array.isRequired,
   knockouts: PropTypes.array.isRequired,
   fetchData: PropTypes.func.isRequired,
+  fetchPredictor: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

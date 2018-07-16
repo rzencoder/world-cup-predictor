@@ -61,8 +61,14 @@ class KnockoutMatch extends Component {
     // Use actual score if match completed instead of prediction
     const homeScore = this.props.data.score1 ? this.props.data.score1 : this.state.homeScore;
     const awayScore = this.props.data.score2 ? this.props.data.score2 : this.state.awayScore;
-    // If result >= 0 home team won
-    const result = homeScore - awayScore;
+    // Compare result by 90 mins then extra time and penalties if needed
+    let result = homeScore - awayScore;
+    if (result === 0) {
+      result = this.props.data.score1et - this.props.data.score2et;
+      if (result === 0) {
+        result = this.props.data.score1p - this.props.data.score2p;
+      }
+    }
     const team = result >= 0 ? this.props.data.team1 : this.props.data.team2;
     const losingTeam = result >= 0 ? this.props.data.team2 : this.props.data.team1;
     const teams = [{ name: team.name, code: team.code }];

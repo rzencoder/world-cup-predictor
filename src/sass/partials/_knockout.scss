@@ -106,6 +106,9 @@
         display: flex;
         justify-content: space-between;
     }
+    >div:first-child {
+        min-height: 30px;
+    }
     .knockout-scorers {
         display: none;
         font-size: 13px;

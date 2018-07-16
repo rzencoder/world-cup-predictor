@@ -27,6 +27,30 @@
     }
 }
 
+.year-selector {
+    min-width: 300px;
+    width: 30%;
+    margin: 40px auto;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    font-size: 20px;
+    background: #ddd;
+    select {
+        margin: 0 10px;
+    }
+    .btn-submit {
+        background: #0e4ce0;
+        color: white;
+        font-weight: 700;
+        border-radius: 2px;
+        padding: 4px;
+        cursor: pointer;
+        border: none;
+        box-shadow: 1px 1px 5px #777;
+    }
+}
+
 .round-selector {
     width: 60%;
     margin: 40px auto;

@@ -17,7 +17,7 @@ class KnockoutGameComponent extends Component {
       }
       /* If scores at extra time were level match went to pens any
        original score from api is penalty score */
-      return extra + data['score' + i + 'et'] + ' (' + data['score' + i] + ')';
+      return extra + data['score' + i + 'et'] + ' (' + data['score' + i + 'p'] + ')';
     }
     return data['score' + i];
   }

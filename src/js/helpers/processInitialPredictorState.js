@@ -1,8 +1,5 @@
-import { tempMatches } from '../data/matchData';
-
-/* Organize data collected from api and replace with temp matches
-if match fixture has not been played yet */
-const processInitialState = (data) => {
+/* Organize data collected from api and remove goals to create template for predictor */
+const processInitialPredictorState = (data) => {
   // Separate groups from knockout games
   const groupGames = data.rounds.slice(0, 15);
   const knockoutGames = data.rounds.slice(15, 18);
@@ -14,31 +11,33 @@ const processInitialState = (data) => {
   const groups = groupNames.map((name) => {
     const sortedGames = [];
     groupGames.filter(game => game.matches.forEach((match) => {
-      // Add match confirmed prop if fixture has been played
+      // Remove goals data
       if (match.group === name) {
-        match.confirmed = true;
-        if (match.score1 === null) match.confirmed = false;
+        match.confirmed = false;
+        match.score1 = null;
+        match.score2 = null;
+        match.goals1 = null;
+        match.goals2 = null;
         sortedGames.push(match);
       }
     }));
     return { name, matches: sortedGames };
   });
 
-  /* Map over each knockout round and each match in round. If the api provides a match
-  replace the temp match with the api match. Add a confirmed value if the match has finished */
-  const knockoutMatches = tempMatches.map((round, i) => {
+  /* Map over each knockout round and each match in round. */
+  const knockoutMatches = knockoutGames.map((round) => {
     const roundMap = round.matches.map((match) => {
-      if (knockoutGames[i].matches.length) {
-        const foundMatch = knockoutGames[i].matches.find(el => el.num === match.num);
-        if (foundMatch) {
-          if (foundMatch.score1 !== null) {
-            foundMatch.confirmed = true;
-          } else {
-            foundMatch.confirmed = false;
-          }
-          return foundMatch;
-        }
-      }
+      match.confirmed = false;
+      match.score1 = null;
+      match.score2 = null;
+      match.score1et = null;
+      match.score2et = null;
+      match.goals1 = null;
+      match.goals2 = null;
+      match.team1.name = null;
+      match.team2.name = null;
+      match.team1.code = null;
+      match.team2.code = null;
       return match;
     });
     return { name: round.name, matches: roundMap };
@@ -53,11 +52,10 @@ const processInitialState = (data) => {
 
   swapElement(knockoutMatches[0].matches, 2, 4);
   swapElement(knockoutMatches[0].matches, 3, 5);
-
   return {
     groupGames: groups,
     knockoutGames: knockoutMatches,
   };
 };
 
-export default processInitialState;
+export default processInitialPredictorState;
