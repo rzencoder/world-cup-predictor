@@ -1,27 +1,27 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-import GroupTable from './GroupTable';
-import GroupGames from './GroupGames';
-import Knockout from './Knockout';
-import KnockoutMatch from './KnockoutMatch';
-import Header from '../components/Header';
+import GroupTable from "./GroupTable";
+import GroupGames from "./GroupGames";
+import Knockout from "./Knockout";
+import KnockoutMatch from "./KnockoutMatch";
+import Header from "../components/Header";
 
-import { fetchData, fetchPredictor } from '../actions/index';
-import { advance } from '../data/matchData';
-import { API2014, API2018 } from '../constants/api';
+import { fetchData, fetchPredictor } from "../actions/index";
+import { advance } from "../data/matchData";
+import { API2014, API2018 } from "../constants/api";
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   groups: state.groups,
   knockouts: state.knockouts,
   loadingError: state.loadingError,
   isLoading: state.loadingData,
 });
 
-const mapDispatchToProps = dispatch => ({
-  fetchData: url => dispatch(fetchData(url)),
-  fetchPredictor: url => dispatch(fetchPredictor(url)),
+const mapDispatchToProps = (dispatch) => ({
+  fetchData: (url) => dispatch(fetchData(url)),
+  fetchPredictor: (url) => dispatch(fetchPredictor(url)),
 });
 
 class App extends Component {
@@ -30,7 +30,7 @@ class App extends Component {
     this.state = {
       knockout: false,
       showInfo: true,
-      year: '2018 Predictor',
+      year: "2018 Predictor",
     };
     this.toggleRound = this.toggleRound.bind(this);
     this.handleYearChange = this.handleYearChange.bind(this);
@@ -49,7 +49,7 @@ class App extends Component {
   }
 
   toggleRound(e) {
-    const toggle = e.target.id === 'knockoutToggle';
+    const toggle = e.target.id === "knockoutToggle";
     this.setState({
       knockout: toggle,
     });
@@ -61,11 +61,12 @@ class App extends Component {
 
   handleYearSubmit(e) {
     e.preventDefault();
-    if (this.state.year === '2014 Results') {
+    if (this.state.year === "2014 Results") {
       this.props.fetchData(API2014);
-    } else if (this.state.year === '2018 Results') {
+    } else if (this.state.year === "2018 Results") {
       this.props.fetchData(API2018);
-    } else if (this.state.year === '2018 Predictor') {
+      this.props.fetchData(API2018);
+    } else if (this.state.year === "2018 Predictor") {
       this.props.fetchPredictor(API2018);
     }
   }
@@ -84,13 +85,18 @@ class App extends Component {
     // Sort Group Links
     const links = this.props.groups.map((el) => {
       const letter = el.name[el.name.length - 1].toLowerCase();
-      return <a key={el.name} href={'#group-' + letter}>{letter.toUpperCase()}</a>;
+      return (
+        <a key={el.name} href={"#group-" + letter}>
+          {letter.toUpperCase()}
+        </a>
+      );
     });
 
     // Map groups games to component
     const groups = this.props.groups.map((el, i) => {
-      const games = el.matches
-        .map((data, j) => <GroupGames data={data} key={data.num} group={i} index={j} />);
+      const games = el.matches.map((data, j) => (
+        <GroupGames data={data} key={data.num} group={i} index={j} />
+      ));
       // Find which match the groups winners and runners up will play in the 'Last 16'
       let first;
       let second;
@@ -103,7 +109,7 @@ class App extends Component {
       return (
         <div
           key={el.name}
-          id={'group-' + (el.name[el.name.length - 1]).toLowerCase()}
+          id={"group-" + el.name[el.name.length - 1].toLowerCase()}
           className="group"
         >
           <GroupTable
@@ -114,7 +120,7 @@ class App extends Component {
             data={el}
             index={i}
           />
-          { games }
+          {games}
         </div>
       );
     });
@@ -123,13 +129,9 @@ class App extends Component {
       <div className="group-container">
         <div className="links">
           <div>Go to Group:</div>
-          <div className="link-container">
-            {links}
-          </div>
+          <div className="link-container">{links}</div>
         </div>
-        <div className="group-stage">
-          {groups}
-        </div>
+        <div className="group-stage">{groups}</div>
       </div>
     );
   }
@@ -137,29 +139,29 @@ class App extends Component {
   renderKnockouts() {
     const knockoutGames = this.props.knockouts;
     // Map the game the winner of each match will play in the first variable
-    const knockoutList = knockoutGames.map((round, i) => round.matches.map((el, j) => {
-      const first = advance[i + 1].matches[j].num;
-      // Map if the winner will be the home or away team in next match
-      const home = advance[i + 1].matches[j].index;
-      return (<KnockoutMatch
-        key={el.num}
-        round={i + 1}
-        first={first}
-        home={home + 1}
-        data={knockoutGames[i].matches[j]}
-      />);
-    }));
+    const knockoutList = knockoutGames.map((round, i) =>
+      round.matches.map((el, j) => {
+        const first = advance[i + 1].matches[j].num;
+        // Map if the winner will be the home or away team in next match
+        const home = advance[i + 1].matches[j].index;
+        return (
+          <KnockoutMatch
+            key={el.num}
+            round={i + 1}
+            first={first}
+            home={home + 1}
+            data={knockoutGames[i].matches[j]}
+          />
+        );
+      })
+    );
 
     const knockoutRounds = knockoutList.map((el, i) => {
-      const key = 'round' + i;
+      const key = "round" + i;
       return <Knockout key={key} data={el} round={i} />;
     });
 
-    return (
-      <div className="knockout-container">
-        {knockoutRounds}
-      </div>
-    );
+    return <div className="knockout-container">{knockoutRounds}</div>;
   }
 
   render() {
@@ -174,7 +176,9 @@ class App extends Component {
       );
     }
 
-    const displayStage = !this.state.knockout ? this.renderGroups() : this.renderKnockouts();
+    const displayStage = !this.state.knockout
+      ? this.renderGroups()
+      : this.renderKnockouts();
 
     return (
       <div className="app">
@@ -189,9 +193,7 @@ class App extends Component {
           keyDownToggle={this.keyDownToggle}
           keyDownCloseInfo={this.keyDownCloseInfo}
         />
-        <div className="container">
-          { displayStage }
-        </div>
+        <div className="container">{displayStage}</div>
       </div>
     );
   }

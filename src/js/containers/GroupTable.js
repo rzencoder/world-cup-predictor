@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-import { updateQualifier, removeTeam, removeChampions } from '../actions/index';
-import GroupTableComponent from '../components/GroupTableComponent';
+import { updateQualifier, removeTeam, removeChampions } from "../actions/index";
+import GroupTableComponent from "../components/GroupTableComponent";
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   groups: state.groups,
   knockouts: state.knockouts,
   champions: state.champions,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   updateQualifier: (teams, index1, index2, round) =>
     dispatch(updateQualifier(teams, index1, index2, round)),
   removeTeam: (round, match, home) => dispatch(removeTeam(round, match, home)),
-  removeChampions: team => dispatch(removeChampions(team)),
+  removeChampions: (team) => dispatch(removeChampions(team)),
 });
 
 class GroupTable extends Component {
@@ -42,8 +42,9 @@ class GroupTable extends Component {
     const teams = [];
     const group = this.props.data;
     // Mapping each team with table data then filtering out any duplicate 2 teams
-    group.matches.map(el => [el.team1.name, el.team1.code])
-      .map(el => ({
+    group.matches
+      .map((el) => [el.team1.name, el.team1.code])
+      .map((el) => ({
         name: el[0],
         code: el[1],
         won: 0,
@@ -53,15 +54,19 @@ class GroupTable extends Component {
         ga: 0,
         gd: 0,
         pts: 0,
-      })).filter((el) => {
-        const i = teams.findIndex(x => x.name === el.name);
+      }))
+      .filter((el) => {
+        const i = teams.findIndex((x) => x.name === el.name);
         if (i <= -1) teams.push(el);
         return null;
       });
 
-    this.setState({
-      teams,
-    }, () => this.calculateTable());
+    this.setState(
+      {
+        teams,
+      },
+      () => this.calculateTable()
+    );
   }
 
   calculateTable() {
@@ -108,13 +113,16 @@ class GroupTable extends Component {
 
     /* Sort table by points and goal difference and goals scored.
     Don't chain as causes bug in Microsoft Edge */
-    const sortedTeams = teams.sort((a, b) => a.gf < b.gf);
-    sortedTeams.sort((a, b) => a.gd < b.gd);
-    sortedTeams.sort((a, b) => a.pts < b.pts);
+    const sortedTeams = teams.sort((a, b) => (a.gf < b.gf ? 1 : -1));
+    sortedTeams.sort((a, b) => (a.gd < b.gd ? 1 : -1));
+    sortedTeams.sort((a, b) => (a.pts < b.pts ? 1 : -1));
 
-    this.setState({
-      teams: sortedTeams,
-    }, () => this.calculateQualifiers());
+    this.setState(
+      {
+        teams: sortedTeams,
+      },
+      () => this.calculateQualifiers()
+    );
   }
 
   checkFutureGames() {
@@ -129,12 +137,18 @@ class GroupTable extends Component {
         round.matches.forEach((match, j) => {
           if (team.name === match.team1.name) {
             removeTeamArr.push({
-              name: team.name, round: i + 1, match: j, home: 'team1',
+              name: team.name,
+              round: i + 1,
+              match: j,
+              home: "team1",
             });
           }
           if (team.name === match.team2.name) {
             removeTeamArr.push({
-              name: team.name, round: i + 1, match: j, home: 'team2',
+              name: team.name,
+              round: i + 1,
+              match: j,
+              home: "team2",
             });
           }
         });

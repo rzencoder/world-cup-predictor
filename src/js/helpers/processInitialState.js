@@ -1,4 +1,4 @@
-import { tempMatches } from '../data/matchData';
+import { tempMatches } from "../data/matchData";
 
 /* Organize data collected from api and replace with temp matches
 if match fixture has not been played yet */
@@ -7,20 +7,31 @@ const processInitialState = (data) => {
   const groupGames = data.rounds.slice(0, 15);
   const knockoutGames = data.rounds.slice(15, 18);
   knockoutGames.push(data.rounds[19]);
-  const groupNames = ['Group A', 'Group B', 'Group C', 'Group D', 'Group E', 'Group F', 'Group G', 'Group H'];
+  const groupNames = [
+    "Group A",
+    "Group B",
+    "Group C",
+    "Group D",
+    "Group E",
+    "Group F",
+    "Group G",
+    "Group H",
+  ];
 
   // Map over each group name and find matches in the api response with the same group name
   // Return with array of  objects of groups with group matches
   const groups = groupNames.map((name) => {
     const sortedGames = [];
-    groupGames.filter(game => game.matches.forEach((match) => {
-      // Add match confirmed prop if fixture has been played
-      if (match.group === name) {
-        match.confirmed = true;
-        if (match.score1 === null) match.confirmed = false;
-        sortedGames.push(match);
-      }
-    }));
+    groupGames.filter((game) =>
+      game.matches.forEach((match) => {
+        // Add match confirmed prop if fixture has been played
+        if (match.group === name) {
+          match.confirmed = true;
+          if (match.score1 === null) match.confirmed = false;
+          sortedGames.push(match);
+        }
+      })
+    );
     return { name, matches: sortedGames };
   });
 
@@ -29,7 +40,9 @@ const processInitialState = (data) => {
   const knockoutMatches = tempMatches.map((round, i) => {
     const roundMap = round.matches.map((match) => {
       if (knockoutGames[i].matches.length) {
-        const foundMatch = knockoutGames[i].matches.find(el => el.num === match.num);
+        const foundMatch = knockoutGames[i].matches.find(
+          (el) => el.num === match.num
+        );
         if (foundMatch) {
           if (foundMatch.score1 !== null) {
             foundMatch.confirmed = true;
