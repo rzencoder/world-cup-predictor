@@ -16,7 +16,7 @@
     "react-dom": "^16.13.1",
     "react-flag-icon-css": "^1.0.23",
     "react-redux": "^5.0.7",
-    "react-scripts": "1.1.4",
+    "react-scripts": "5.0.1",
     "react-sizeme": "^2.4.4",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
@@ -40,6 +40,6 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.9.1",
     "gh-pages": "^1.2.0",
-    "svg-url-loader": "^2.3.2"
+    "svg-url-loader": "^8.0.0"
   }
 }
